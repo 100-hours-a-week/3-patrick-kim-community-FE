@@ -1,5 +1,6 @@
 import { signup } from '/api/auth.js';
 import { uploadImage } from '/api/image.js';
+import { isValidEmail, isValidPassword, isValidNickname } from '/lib/validators.js';
 
 // 프로필 이미지 선택 및 미리보기
 const profileImageInput = document.getElementById('profile-image');
@@ -49,18 +50,16 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
         return;
     }
 
-    //유효성 검증
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
+        // 유효성 검증 (공통 유틸 사용)
+        if (!isValidEmail(email)) {
             alert('유효한 이메일 주소를 입력하세요.');
             return;
         }
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+]{8,}$/;
-        if (!passwordRegex.test(password)) {
+        if (!isValidPassword(password)) {
             alert('비밀번호는 최소 8자 이상이며, 영문자와 숫자를 모두 포함해야 합니다.');
             return;
         }
-        if (nickname.length < 2 || nickname.length> 20) {
+        if (!isValidNickname(nickname)) {
             alert('닉네임은 2자 이상 20자 이하이어야 합니다.');
             return;
         }
@@ -73,7 +72,7 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
         const imageFile = profileImageInput?.files?.[0];
         if (imageFile) {
             console.log('이미지 업로드 시작...');
-            const uploadResult = await uploadImage(imageFile);
+            const uploadResult = await uploadImage(imageFile, 'profile');
             profileImageId = uploadResult?.imageId || uploadResult?.id || uploadResult;
             console.log('이미지 업로드 성공:', profileImageId);
         }

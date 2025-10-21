@@ -1,4 +1,6 @@
-// 드롭다운 메뉴 토글 기능
+// 드롭다운 메뉴 토글 기능 (ESM)
+import { logout } from '/api/auth.js';
+
 document.addEventListener('DOMContentLoaded', function() {
   const dropdowns = document.querySelectorAll('.dropdown');
   

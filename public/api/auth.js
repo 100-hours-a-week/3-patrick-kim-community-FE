@@ -9,7 +9,7 @@ const BASE_URL = (typeof window !== 'undefined' && window.location.host.includes
  * @param {string} email - 이메일
  * @param {string} password - 비밀번호
  */
-async function login(email, password) {
+export async function login(email, password) {
   try {
     const response = await fetch(`${BASE_URL}/auth`, {
       method: 'POST',
@@ -46,7 +46,7 @@ async function login(email, password) {
 /**
  * 로그아웃 API
  */
-async function logout() {
+export async function logout() {
   try {
     const token = localStorage.getItem('accessToken');
     console.log('로그아웃 토큰:', token);
@@ -75,11 +75,18 @@ async function logout() {
   }
 }
 
+
+/**
+ * 회원가입API
+ */
+
+
+
 /**
  * 인증 토큰 확인
  * @returns {boolean} 로그인 여부
  */
-function isAuthenticated() {
+export function isAuthenticated() {
   return !!localStorage.getItem('accessToken');
 }
 
@@ -87,18 +94,13 @@ function isAuthenticated() {
  * 인증 토큰 가져오기
  * @returns {string|null} Access Token
  */
-function getAccessToken() {
+export function getAccessToken() {
   return localStorage.getItem('accessToken');
 }
 
 // json 만들기
-function createJson(data) { 
+export function createJson(data) { 
     return JSON.stringify(data);
 }
 
-// 브라우저 전역 노출 (스크립트로 로드되는 환경)
-window.login = login;
-window.logout = logout;
-window.isAuthenticated = isAuthenticated;
-window.getAccessToken = getAccessToken;
 

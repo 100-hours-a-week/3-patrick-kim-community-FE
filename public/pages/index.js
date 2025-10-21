@@ -1,6 +1,6 @@
+// 로그인 폼 제출 시 로그인 API 호출 (ESM)
+import { login } from '/api/auth.js';
 
-
-// 로그인 폼 제출 시 로그인 API 호출
 (function () {
     const form = document.getElementById('login-form');
     if (!form) return;

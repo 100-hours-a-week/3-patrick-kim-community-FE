@@ -1,6 +1,5 @@
 // 인증 관련 API 호출
 
-// 개발 환경(프론트 3000)에서는 프록시(/api)를 통해 백엔드를 호출하여 CORS 이슈를 피합니다.
 const BASE_URL = (typeof window !== 'undefined' && window.location.host.includes('localhost:3000'))
   ? '/backend'
   : 'http://localhost:8080';
@@ -9,7 +8,6 @@ const BASE_URL = (typeof window !== 'undefined' && window.location.host.includes
  * 로그인 API
  * @param {string} email - 이메일
  * @param {string} password - 비밀번호
- * @returns {Promise<Object>} API 응답 데이터
  */
 async function login(email, password) {
   try {
@@ -47,11 +45,11 @@ async function login(email, password) {
 
 /**
  * 로그아웃 API
- * @returns {Promise<Object>} API 응답 데이터
  */
 async function logout() {
   try {
     const token = localStorage.getItem('accessToken');
+    console.log('로그아웃 토큰:', token);
     
     const response = await fetch(`${BASE_URL}/auth`, {
       method: 'DELETE',
@@ -61,17 +59,16 @@ async function logout() {
       }
     });
 
-  const result = await response.json();
-
     if (!response.ok) {
-      throw new Error(result.message || '로그아웃에 실패했습니다.');
+      throw new Error('로그아웃에 실패했습니다.');
     }
 
     // 로컬 스토리지에서 토큰 제거
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
 
-    return result;
+    // 204 No Content이므로 응답 바디 없음
+    return { isSuccess: true };
   } catch (error) {
     console.error('로그아웃 API 오류:', error);
     throw error;

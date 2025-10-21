@@ -98,6 +98,7 @@ header h1, .header h1, .app-header h1 {
 /* 드롭다운 메뉴 */
 .dropdown {
   position: relative;
+  cursor: pointer;
 }
 
 .dropdown .menu {
@@ -110,11 +111,13 @@ header h1, .header h1, .app-header h1 {
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  min-width: 160px;
+  min-width: 180px;
   overflow: hidden;
+  z-index: 1000;
 }
 
-.dropdown:hover .menu {
+.dropdown:hover .menu,
+.dropdown.active .menu {
   display: block;
 }
 
@@ -123,10 +126,16 @@ header h1, .header h1, .app-header h1 {
   padding: 12px 16px;
   color: #333;
   transition: background-color 0.2s;
+  cursor: pointer;
 }
 
 .dropdown .menu a:hover {
   background-color: #f5f5f5;
+}
+
+.dropdown .menu a#logout-btn:hover {
+  background-color: #fee;
+  color: #dc3545;
 }
 
 /* ===========================

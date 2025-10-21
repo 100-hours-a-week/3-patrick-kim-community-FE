@@ -28,11 +28,16 @@ profileImageInput?.addEventListener('change', (e) => {
 // 회원가입 폼 제출
 document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+
+    
     
     const email = document.getElementById('signup-email')?.value?.trim();
     const password = document.getElementById('signup-password')?.value;
     const confirmPassword = document.getElementById('signup-confirm')?.value;
     const nickname = document.getElementById('nickname')?.value?.trim();
+
+    
     
     if (!email || !password || !confirmPassword || !nickname) {
         alert('모든 필드를 입력하세요.');
@@ -43,6 +48,24 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
         alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
         return;
     }
+
+    //유효성 검증
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('유효한 이메일 주소를 입력하세요.');
+            return;
+        }
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            alert('비밀번호는 최소 8자 이상이며, 영문자와 숫자를 모두 포함해야 합니다.');
+            return;
+        }
+        if (nickname.length < 2 || nickname.length> 20) {
+            alert('닉네임은 2자 이상 20자 이하이어야 합니다.');
+            return;
+        }
+
+
 
     try {
         let profileImageId = null;

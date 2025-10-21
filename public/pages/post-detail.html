@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 상세 - 아무 말 대잔치</title>
+  <link rel="stylesheet" href="/component/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="left"><a class="icon-btn" href="board.html">←</a></div>
+    <h1>아무 말 대잔치</h1>
+    <div class="right"><a class="icon-btn" href="profile-edit.html">👤</a></div>
+  </header>
+
+  <main class="container">
+    <article class="card">
+      <header style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h2 class="post-title">제목 1</h2>
+          <div class="meta">
+            <span class="author"><span class="avatar"></span> 더미 작성자</span>
+            <span>2021-01-01 00:00:00</span>
+          </div>
+        </div>
+        <div class="inline-actions">
+          <a class="btn outline" style="width:auto" href="post-edit.html">수정</a>
+          <button class="btn outline danger" style="width:auto">삭제</button>
+        </div>
+      </header>
+
+      <div class="image-box"></div>
+      <div class="post-body">
+        무엇을 얘기할까요? 아무말이라면, 삶은 항상 놀라운 모험이라고 생각합니다. …
+      </div>
+
+      <div class="stats">
+        <div class="stat-pill"><strong>123</strong><span>좋아요수</span></div>
+        <div class="stat-pill"><strong>123</strong><span>조회수</span></div>
+        <div class="stat-pill"><strong>123</strong><span>댓글</span></div>
+      </div>
+
+      <section class="comment-editor">
+        <textarea class="textarea" placeholder="댓글을 남겨주세요!"></textarea>
+        <div style="display:flex; justify-content:flex-end;">
+          <button class="btn" style="max-width:140px;">댓글 등록</button>
+        </div>
+      </section>
+    </article>
+
+    <section class="comment-list">
+      <div class="comment">
+        <div class="comment-head">
+          <div class="comment-meta"><span class="avatar" style="width:22px;height:22px;"></span> 더미 작성자1 · 2021-01-01 00:00:00</div>
+          <div class="inline-actions">
+            <button class="btn outline" style="width:auto">수정</button>
+            <button class="btn outline danger" style="width:auto">삭제</button>
+          </div>
+        </div>
+        <div>댓글 내용</div>
+      </div>
+      <div class="comment">
+        <div class="comment-head">
+          <div class="comment-meta"><span class="avatar" style="width:22px;height:22px;"></span> 더미 작성자2 · 2021-01-01 00:00:00</div>
+          <div class="inline-actions">
+            <button class="btn outline" style="width:auto">수정</button>
+            <button class="btn outline danger" style="width:auto">삭제</button>
+          </div>
+        </div>
+        <div>댓글 내용</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 수정 - 아무 말 대잔치</title>
+  <link rel="stylesheet" href="/component/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="left"><a class="icon-btn" href="post-detail.html">←</a></div>
+    <h1>아무 말 대잔치</h1>
+    <div class="right"><a class="icon-btn" href="profile-edit.html">👤</a></div>
+  </header>
+
+  <main class="container">
+    <h2 class="center">게시글 수정</h2>
+
+    <form class="card form" style="max-width:720px; margin-inline:auto;">
+      <div class="field">
+        <label class="label" for="title">제목*</label>
+        <input class="input" id="title" value="제목 1" />
+      </div>
+
+      <div class="field">
+        <label class="label" for="content">내용*</label>
+        <textarea class="textarea" id="content">무엇을 얘기할까요? 아무말이라면, 삶은 항상 놀라운 모험이라고 생각합니다. 우리는 매일 새로운 경험을 하며 배우며 성장합니다...</textarea>
+      </div>
+
+      <div class="field">
+        <small class="helper">* helper text</small>
+        <label class="label" for="image">이미지</label>
+        <input class="file" id="image" type="file">
+      </div>
+
+      <button class="btn">수정하기</button>
+    </form>
+  </main>
+</body>
+</html>

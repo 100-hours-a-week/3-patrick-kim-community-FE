@@ -1,8 +1,6 @@
 // 인증 관련 API 호출
 
-const BASE_URL = (typeof window !== 'undefined' && window.location.host.includes('localhost:3000'))
-  ? '/backend'
-  : 'http://localhost:8080';
+const BASE_URL = 'http://localhost:8080';
 
 /**
  * 로그인 API
@@ -77,10 +75,38 @@ export async function logout() {
 
 
 /**
- * 회원가입API
+ * 회원가입API -> 2단계 
+ * 1. 이미지 업로드 
+ * 2. 회원가입 
  */
 
+export async function signup(email, password, nickname, profileImageId) {
+    try {
+        const response = await fetch(`${BASE_URL}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password, nickname, profileImageId })
+        });
 
+        const result = await response.json();
+
+        if (!response.ok) {
+            console.error('회원가입 API 오류:', result);
+            throw new Error(result?.message || '회원가입에 실패했습니다.');
+        }
+
+        if (result?.isSuccess) {
+            return result;
+        } else {
+            throw new Error(result?.message || '회원가입에 실패했습니다.');
+        }
+    } catch (error) {
+        console.error('회원가입 API 오류:', error);
+        throw error;
+    }
+}
 
 /**
  * 인증 토큰 확인

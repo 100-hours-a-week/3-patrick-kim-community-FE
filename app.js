@@ -4,7 +4,7 @@ const path = require('path');
 
 // express 인스턴스 생성
 const app = express();
-const { createProxyMiddleware } = require('http-proxy-middleware');
+
 
 // 포트 정보
 const port = process.env.PORT || 3000;
@@ -12,12 +12,7 @@ const port = process.env.PORT || 3000;
 // 정적 파일 서빙 (public 폴더)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 백엔드 API 프록시 (브라우저 CORS 회피)
-app.use('/backend', createProxyMiddleware({
-	target: 'http://localhost:8080',
-	changeOrigin: true,
-	pathRewrite: { '^/backend': '' },
-}));
+
 
 // 첫 화면: 로그인 페이지로 리디렉션
 app.get('/', (req, res) => {

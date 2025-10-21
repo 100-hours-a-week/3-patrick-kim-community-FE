@@ -1,38 +1,70 @@
 import { signup } from '/api/auth.js';
+import { uploadImage } from '/api/image.js';
 
+// 프로필 이미지 선택 및 미리보기
+const profileImageInput = document.getElementById('profile-image');
+const profilePreview = document.getElementById('profile-preview');
 
+// 프로필 placeholder 클릭 시 파일 선택
+profilePreview?.addEventListener('click', () => {
+    profileImageInput?.click();
+});
 
-// 회원가입 폼 제출 시 회원가입 api 호출
+// 이미지 선택 시 미리보기 표시
+profileImageInput?.addEventListener('change', (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            profilePreview.style.backgroundImage = `url(${event.target.result})`;
+            profilePreview.style.backgroundSize = 'cover';
+            profilePreview.style.backgroundPosition = 'center';
+            profilePreview.textContent = '';
+        };
+        reader.readAsDataURL(file);
+    }
+});
 
+// 회원가입 폼 제출
 document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const email = document.getElementById('email')?.value?.trim();
-    const password = document.getElementById('password')?.value;
-    const confirmPassword = document.getElementById('confirm-password')?.value;
+    const email = document.getElementById('signup-email')?.value?.trim();
+    const password = document.getElementById('signup-password')?.value;
+    const confirmPassword = document.getElementById('signup-confirm')?.value;
     const nickname = document.getElementById('nickname')?.value?.trim();
-    const profileImageUrl = document.getElementById('profile-image-url')?.value?.trim();
     
     if (!email || !password || !confirmPassword || !nickname) {
         alert('모든 필드를 입력하세요.');
         return;
     }
+    
     if (password !== confirmPassword) {
         alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
         return;
     }
-    
+
     try {
-        const result = await signup(email, password, nickname, profileImageUrl);
+        let profileImageId = null;
+        // 이미지가 선택된 경우 업로드
+        const imageFile = profileImageInput?.files?.[0];
+        if (imageFile) {
+            console.log('이미지 업로드 시작...');
+            const uploadResult = await uploadImage(imageFile);
+            profileImageId = uploadResult?.imageId || uploadResult?.id || uploadResult;
+            console.log('이미지 업로드 성공:', profileImageId);
+        }
+        // 회원가입 API 호출
+        const result = await signup(email, password, nickname, profileImageId);
         alert('회원가입 성공! 로그인 페이지로 이동합니다.');
         window.location.href = '/pages/index.html';
-    }
-    catch (error) {
+    } catch (error) {
+        console.error('회원가입 실패:', error);
         alert(`회원가입 실패: ${error?.message || '다시 시도해주세요.'}`);
     }
-
-
 });
+
+
 
 
 

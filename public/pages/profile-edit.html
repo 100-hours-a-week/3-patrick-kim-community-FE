@@ -23,28 +23,29 @@
     <h2 class="center">회원정보수정</h2>
 
     <section class="profile-center mt-16">
-      <div class="profile-photo">
-        <span>🖼️</span>
-        <span class="badge">변경</span>
-      </div>
+      <label for="profile-image" style="cursor:pointer;display:inline-block;">
+        <img id="profile-image-preview" src="" alt="프로필 이미지" style="width:100px;height:100px;border-radius:50%;object-fit:cover;background:#eee;" />
+        <span class="badge" style="position:absolute;left:90px;top:10px;">변경</span>
+      </label>
+      <input id="profile-image" type="file" accept="image/*" style="display:none;" />
     </section>
 
     <form class="card form mt-16" style="max-width:560px; margin-inline:auto;">
       <div class="field">
         <label class="label" for="email">이메일</label>
-        <input class="input" id="email" type="email" value="startupcode@gmail.com" />
+        <input class="input" id="email" type="email" readonly />
       </div>
       <div class="field">
         <label class="label" for="nickname">닉네임</label>
-        <input class="input" id="nickname" placeholder="닉네임" value="스타트업코드" />
-        <small class="helper">* helper text</small>
+        <input class="input" id="nickname" placeholder="닉네임" value="닉네임을 입력해주세요" />
+        <small class="helper"></small>
       </div>
 
-      <button class="btn">수정하기</button>
-      <button type="button" class="btn outline">회원 탈퇴</button>
+      <button class="btn" type="submit">수정하기</button>
       <div class="center"><button type="button" class="btn" style="width:auto; padding-inline:18px;">수정완료</button></div>
     </form>
   </main>
   <script type="module" src="/component/dropdown.js"></script>
+  <script type="module" src="/pages/profile-edit.js"></script>
 </body>
 </html>

@@ -32,19 +32,42 @@ export async function getPostDetail(postId) {
 
 /**
  * 게시글 작성
- * @param {Object} data - { title, content, postImageId? }
+ * @param {Object} data - { title, content, postImageUrl? }
  * @returns {Promise<{isSuccess:boolean, message:string, data:{postId:number}}>}
  */
-export async function createPost({ title, content, postImageId }) {
+export async function createPost({ title, content, postImageUrl }) {
   const result = await request('/posts', {
     method: 'POST',
     body: {
       title,
       content,
-      ...(postImageId ? { postImageId } : {}),
+      ...(postImageUrl ? { postImageUrl } : {}),
     },
   });
   return result;
 }
 
+/**
+ * 좋아요 추가
+ * @param {number} postId - 게시글 ID
+ * @returns {Promise<{isSuccess:boolean, message:string, data:{postId:number, liked:boolean}}>}
+ */
+export async function addLike(postId) {
+  const result = await request(`/posts/${postId}/likes`, {
+    method: 'POST',
+  });
+  return result;
+}
+
+/**
+ * 좋아요 삭제
+ * @param {number} postId - 게시글 ID
+ * @returns {Promise<{isSuccess:boolean, message:string, data:{postId:number, liked:boolean}}>}
+ */
+export async function removeLike(postId) {
+  const result = await request(`/posts/${postId}/likes`, {
+    method: 'DELETE',
+  });
+  return result;
+}
 

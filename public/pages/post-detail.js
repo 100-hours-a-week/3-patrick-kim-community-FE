@@ -42,9 +42,16 @@ function updateLikeUI() {
   if (statsEl) {
     const likePill = statsEl.querySelector('.stat-pill.like-pill');
     if (likePill) {
-      likePill.innerHTML = `<strong>${likeCount}</strong><span>좋아요수</span>`;
+      likePill.innerHTML = `<span class="like-icon">❤️</span><strong>${likeCount}</strong><span>좋아요수</span>`;
       likePill.style.cursor = 'pointer';
       likePill.style.backgroundColor = isLiked ? '#FEE500' : '#f8f8f8';
+      
+      // 애니메이션 클래스 추가 후 제거
+      likePill.classList.remove('liked');
+      void likePill.offsetWidth; // 리플로우 강제 (애니메이션 재시작)
+      if (isLiked) {
+        likePill.classList.add('liked');
+      }
     }
   }
 }
@@ -104,8 +111,8 @@ function updateLikeUI() {
     const statsEl = qs('.stats');
     if (statsEl) {
       statsEl.innerHTML = `
-        <div class="stat-pill like-pill" style="cursor:pointer; background-color:${isLiked ? '#FEE500' : '#f8f8f8'};">
-          <strong>${likeCount}</strong><span>좋아요수</span>
+        <div class="stat-pill like-pill${isLiked ? ' liked' : ''}" style="cursor:pointer; background-color:${isLiked ? '#FEE500' : '#f8f8f8'};">
+          <span class="like-icon">❤️</span><strong>${likeCount}</strong><span>좋아요수</span>
         </div>
         <div class="stat-pill"><strong>${views}</strong><span>조회수</span></div>
         <div class="stat-pill"><strong>${comments}</strong><span>댓글</span></div>

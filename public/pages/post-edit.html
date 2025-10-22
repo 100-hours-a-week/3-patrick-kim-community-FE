@@ -26,23 +26,25 @@
     <form class="card form" style="max-width:720px; margin-inline:auto;">
       <div class="field">
         <label class="label" for="title">제목*</label>
-        <input class="input" id="title" value="제목 1" />
+        <input class="input" id="title" placeholder="제목을 입력해주세요 (최대 26자)" maxlength="26" />
+        <small class="helper" id="title-count">0 / 26</small>
       </div>
 
       <div class="field">
         <label class="label" for="content">내용*</label>
-        <textarea class="textarea" id="content">무엇을 얘기할까요? 아무말이라면, 삶은 항상 놀라운 모험이라고 생각합니다. 우리는 매일 새로운 경험을 하며 배우며 성장합니다...</textarea>
+        <textarea class="textarea" id="content" placeholder="내용을 입력해주세요 (최대 255자)" rows="10" maxlength="255"></textarea>
       </div>
 
       <div class="field">
-        <small class="helper">* helper text</small>
         <label class="label" for="image">이미지</label>
-        <input class="file" id="image" type="file">
+        <input class="file" id="image" type="file" accept="image/*">
+        <small class="helper">* 새 이미지를 선택하면 기존 이미지를 대체합니다</small>
       </div>
 
-      <button class="btn">수정하기</button>
+      <button class="btn" type="submit">수정하기</button>
     </form>
   </main>
   <script type="module" src="/component/dropdown.js"></script>
+  <script type="module" src="/pages/post-edit.js"></script>
 </body>
 </html>

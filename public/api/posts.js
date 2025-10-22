@@ -32,7 +32,7 @@ export async function getPostDetail(postId) {
 
 /**
  * 게시글 작성
- * @param {Object} data - { title, content, postImageUrl? }
+ * @param {Object} data - { title, content, postImageId? }
  * @returns {Promise<{isSuccess:boolean, message:string, data:{postId:number}}>}
  */
 export async function createPost({ title, content, postImageId }) {
@@ -79,6 +79,24 @@ export async function removeLike(postId) {
 export async function deletePost(postId) {
   const result = await request(`/posts/${postId}`, {
     method: 'DELETE',
+  });
+  return result;
+}
+
+/**
+ * 게시글 수정
+ * @param {number} postId - 게시글 ID
+ * @param {Object} data - { title, content, postImageId? }
+ * @returns {Promise<{isSuccess:boolean, message:string, data:{postId:number}}>}
+ */
+export async function updatePost(postId, { title, content, postImageId }) {
+  const result = await request(`/posts/${postId}`, {
+    method: 'PATCH',
+    body: {
+      title,
+      content,
+      ...(postImageId ? { postImageId } : {}),
+    },
   });
   return result;
 }

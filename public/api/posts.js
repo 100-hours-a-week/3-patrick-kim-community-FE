@@ -19,3 +19,16 @@ export async function getPosts(cursorId, limit = 10) {
 }
 
 
+/**
+ * 게시글 상세 조회
+ */
+
+export async function getPostDetail(postId) {
+    const result = await request(`/posts/${postId}`, {
+        method: 'GET',
+    });
+    return result;
+}
+
+
+

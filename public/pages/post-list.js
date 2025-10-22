@@ -1,12 +1,14 @@
 // 게시글 목록 페이지 로직
 import { getPosts } from '/api/posts.js';
+import { formatDateTime } from '/lib/datetime.js';
 
 function createPostItem(post) {
   const el = document.createElement('article');
   el.className = 'post';
+  const when = formatDateTime(post.createdAt);
   el.innerHTML = `
     <h3>${post.title ?? '제목 없음'}</h3>
-    <p class="meta">${post.user?.nickname ?? '알 수 없음'} | 댓글 ${post.comments ?? 0} | 조회수 ${post.views ?? 0} | ${post.createdAt ?? ''}</p>
+    <p class="meta">${post.user?.nickname ?? '알 수 없음'} | 댓글 ${post.comments ?? 0} | 조회수 ${post.views ?? 0} | ${when}</p>
     <div class="preview">${post.content?.slice?.(0, 120) ?? ''}</div>
   `;
   // 상세페이지 이동은 추후 postId 기반으로 연결

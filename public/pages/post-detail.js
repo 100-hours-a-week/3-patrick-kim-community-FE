@@ -1,6 +1,6 @@
 // 게시글 상세 페이지 로직
 import { getPostDetail, addLike, removeLike, deletePost } from '/api/posts.js';
-import { getComments } from '/api/comments.js';
+import { getComments, createComment, updateComment, deleteComment } from '/api/comments.js';
 import { formatDateTime } from '/lib/datetime.js';
 
 let currentPostId = null;
@@ -90,7 +90,6 @@ function createCommentItem(comment) {
   el.dataset.commentId = comment.commentId;
   
   const user = comment.user || {};
-  console.log('user.profileImageUrl:', user.profileImageUrl); // 디버깅
   const avatarStyle = user.profileImageUrl 
     ? `background-image:url('${user.profileImageUrl}'); background-size:cover; background-position:center; display:inline-block;` 
     : '';
@@ -103,15 +102,108 @@ function createCommentItem(comment) {
         ${user.nickname || '익명'} · ${when}
       </div>
       <div class="inline-actions">
-        <button class="btn outline" style="width:auto">수정</button>
-        <button class="btn outline danger" style="width:auto">삭제</button>
+        <button class="btn outline edit-comment-btn" style="width:auto">수정</button>
+        <button class="btn outline danger delete-comment-btn" style="width:auto">삭제</button>
       </div>
     </div>
-    <div>${comment.content ?? ''}</div>
+    <div class="comment-content">${comment.content ?? ''}</div>
   `;
+  
+  // 수정 버튼 이벤트
+  const editBtn = el.querySelector('.edit-comment-btn');
+  editBtn?.addEventListener('click', () => handleEditComment(comment.commentId, el));
+  
+  // 삭제 버튼 이벤트
+  const deleteBtn = el.querySelector('.delete-comment-btn');
+  deleteBtn?.addEventListener('click', () => handleDeleteComment(comment.commentId, el));
   
   return el;
 }
+
+// 댓글 작성
+async function handleCreateComment() {
+  const textarea = qs('.comment-editor textarea');
+  const content = textarea?.value?.trim();
+  
+  if (!content) {
+    alert('댓글 내용을 입력해주세요.');
+    textarea?.focus();
+    return;
+  }
+  
+  if (!currentPostId) {
+    alert('게시글 ID가 없습니다.');
+    return;
+  }
+  
+  try {
+    const result = await createComment(currentPostId, content);
+    if (result?.isSuccess) {
+      alert('댓글이 작성되었습니다.');
+      // 댓글 목록 새로고침
+      commentCursorId = null;
+      hasNextComments = true;
+      const container = qs('.comment-list');
+      if (container) container.innerHTML = '';
+      await loadMoreComments();
+      // 입력창 초기화
+      if (textarea) textarea.value = '';
+    } else {
+      throw new Error(result?.message || '댓글 작성 실패');
+    }
+  } catch (e) {
+    console.error('댓글 작성 실패:', e);
+    alert(`댓글 작성 실패: ${e.message || e}`);
+  }
+}
+
+// 댓글 수정
+async function handleEditComment(commentId, commentEl) {
+  const contentEl = commentEl.querySelector('.comment-content');
+  const currentContent = contentEl?.textContent || '';
+  
+  const newContent = prompt('댓글을 수정하세요:', currentContent);
+  if (newContent === null) return; // 취소
+  if (!newContent.trim()) {
+    alert('댓글 내용을 입력해주세요.');
+    return;
+  }
+  
+  try {
+    const result = await updateComment(commentId, newContent.trim());
+    if (result?.isSuccess) {
+      alert('댓글이 수정되었습니다.');
+      // 댓글 내용만 업데이트
+      if (contentEl) contentEl.textContent = newContent.trim();
+    } else {
+      throw new Error(result?.message || '댓글 수정 실패');
+    }
+  } catch (e) {
+    console.error('댓글 수정 실패:', e);
+    alert(`댓글 수정 실패: ${e.message || e}`);
+  }
+}
+
+// 댓글 삭제
+async function handleDeleteComment(commentId, commentEl) {
+  const confirmed = confirm('정말 삭제하시겠습니까?');
+  if (!confirmed) return;
+  
+  try {
+    const result = await deleteComment(commentId);
+    if (result?.isSuccess) {
+      alert('댓글이 삭제되었습니다.');
+      // DOM에서 제거
+      commentEl?.remove();
+    } else {
+      throw new Error(result?.message || '댓글 삭제 실패');
+    }
+  } catch (e) {
+    console.error('댓글 삭제 실패:', e);
+    alert(`댓글 삭제 실패: ${e.message || e}`);
+  }
+}
+
 
 // 댓글 목록 로드
 async function loadMoreComments() {
@@ -240,6 +332,10 @@ async function loadMoreComments() {
     // 댓글 더보기 버튼 이벤트
     const loadMoreCommentsBtn = document.getElementById('load-more-comments-btn');
     loadMoreCommentsBtn?.addEventListener('click', () => loadMoreComments());
+    
+    // 댓글 등록 버튼 이벤트
+    const createCommentBtn = qs('.comment-editor .btn');
+    createCommentBtn?.addEventListener('click', handleCreateComment);
   } catch (e) {
     console.error('게시글 상세 조회 실패:', e);
     alert(`게시글 상세 조회 실패: ${e.message || e}`);

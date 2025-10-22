@@ -1,10 +1,17 @@
 // 게시글 상세 페이지 로직
 import { getPostDetail, addLike, removeLike, deletePost } from '/api/posts.js';
+import { getComments } from '/api/comments.js';
 import { formatDateTime } from '/lib/datetime.js';
 
 let currentPostId = null;
 let isLiked = false;
 let likeCount = 0;
+
+// 댓글 페이지네이션 상태
+let commentCursorId = null;
+let hasNextComments = true;
+let isLoadingComments = false;
+const commentLimit = 10;
 
 function qs(selector, root = document) {
   return root.querySelector(selector);
@@ -73,6 +80,76 @@ async function handleDelete() {
   } catch (e) {
     console.error('게시글 삭제 실패:', e);
     alert(`게시글 삭제 실패: ${e.message || e}`);
+  }
+}
+
+// 댓글 아이템 생성
+function createCommentItem(comment) {
+  const el = document.createElement('div');
+  el.className = 'comment';
+  el.dataset.commentId = comment.commentId;
+  
+  const user = comment.user || {};
+  console.log('user.profileImageUrl:', user.profileImageUrl); // 디버깅
+  const avatarStyle = user.profileImageUrl 
+    ? `background-image:url('${user.profileImageUrl}'); background-size:cover; background-position:center; display:inline-block;` 
+    : '';
+  const when = formatDateTime(comment.createdAt);
+  
+  el.innerHTML = `
+    <div class="comment-head">
+      <div class="comment-meta">
+        <span class="avatar" style="width:22px; height:22px; ${avatarStyle}"></span> 
+        ${user.nickname || '익명'} · ${when}
+      </div>
+      <div class="inline-actions">
+        <button class="btn outline" style="width:auto">수정</button>
+        <button class="btn outline danger" style="width:auto">삭제</button>
+      </div>
+    </div>
+    <div>${comment.content ?? ''}</div>
+  `;
+  
+  return el;
+}
+
+// 댓글 목록 로드
+async function loadMoreComments() {
+  const container = qs('.comment-list');
+  const loadMoreBtn = document.getElementById('load-more-comments-btn');
+  const spinner = document.getElementById('load-more-comments-spinner');
+  
+  if (!container || !currentPostId || isLoadingComments || !hasNextComments) return;
+
+  isLoadingComments = true;
+  if (loadMoreBtn) loadMoreBtn.disabled = true;
+  if (spinner) spinner.style.display = 'inline-block';
+
+  try {
+    const res = await getComments(currentPostId, commentCursorId, commentLimit);
+    if (!res?.isSuccess) throw new Error(res?.message || '댓글 목록 조회 실패');
+    
+    const { comments = [], nextCursorId, hasNext } = res.data || {};
+    comments.forEach(c => container.appendChild(createCommentItem(c)));
+    
+    commentCursorId = nextCursorId ?? null;
+    hasNextComments = hasNext ?? false;
+    
+    // 더보기 버튼 표시/숨김 처리
+    if (loadMoreBtn) {
+      if (hasNextComments) {
+        loadMoreBtn.style.display = 'inline-block';
+      } else {
+        loadMoreBtn.style.display = 'none';
+      }
+    }
+  } catch (e) {
+    console.error('댓글 목록 조회 실패:', e);
+    alert(`댓글 목록 조회 실패: ${e.message || e}`);
+  } finally {
+    isLoadingComments = false;
+    if (loadMoreBtn) loadMoreBtn.disabled = false;
+    if (spinner) spinner.style.display = 'none';
   }
 }
 
@@ -156,6 +233,13 @@ async function handleDelete() {
     if (deleteBtn) {
       deleteBtn.addEventListener('click', handleDelete);
     }
+    
+    // 댓글 목록 로드
+    await loadMoreComments();
+    
+    // 댓글 더보기 버튼 이벤트
+    const loadMoreCommentsBtn = document.getElementById('load-more-comments-btn');
+    loadMoreCommentsBtn?.addEventListener('click', () => loadMoreComments());
   } catch (e) {
     console.error('게시글 상세 조회 실패:', e);
     alert(`게시글 상세 조회 실패: ${e.message || e}`);

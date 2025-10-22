@@ -56,27 +56,14 @@
     </article>
 
     <section class="comment-list">
-      <div class="comment">
-        <div class="comment-head">
-          <div class="comment-meta"><span class="avatar" style="width:22px;height:22px;"></span> 더미 작성자1 · 2021-01-01 00:00:00</div>
-          <div class="inline-actions">
-            <button class="btn outline" style="width:auto">수정</button>
-            <button class="btn outline danger" style="width:auto">삭제</button>
-          </div>
-        </div>
-        <div>댓글 내용</div>
-      </div>
-      <div class="comment">
-        <div class="comment-head">
-          <div class="comment-meta"><span class="avatar" style="width:22px;height:22px;"></span> 더미 작성자2 · 2021-01-01 00:00:00</div>
-          <div class="inline-actions">
-            <button class="btn outline" style="width:auto">수정</button>
-            <button class="btn outline danger" style="width:auto">삭제</button>
-          </div>
-        </div>
-        <div>댓글 내용</div>
-      </div>
+      <!-- 댓글이 동적으로 추가됩니다 -->
     </section>
+
+    <!-- 댓글 더보기 버튼 & 스피너 -->
+    <div style="text-align:center; margin:20px 0;">
+      <button id="load-more-comments-btn" class="btn outline" style="max-width:200px; display:none;">댓글 더보기</button>
+      <div id="load-more-comments-spinner" style="display:none; margin-top:8px; color:#666;">로딩 중...</div>
+    </div>
   </main>
   <script type="module" src="/component/dropdown.js"></script>
   <script type="module" src="/pages/post-detail.js"></script>

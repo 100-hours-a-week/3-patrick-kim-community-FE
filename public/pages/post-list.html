@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>게시판 - 아무 말 대잔치</title>
+  <link rel="stylesheet" href="/component/style.css" />
+</head>
+<body class="post-list-page">
+  <header class="app-header">
+    <h1>아무 말 대잔치</h1>
+    <div class="dropdown">
+      <div class="profile-icon">👤</div>
+      <nav class="menu">
+        <a href="profile-edit.html">회원정보수정</a>
+        <a href="password-edit.html">비밀번호수정</a>
+        <a href="index.html" id="logout-btn">로그아웃</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <p>안녕하세요,<br />아무 말 대잔치 <strong>게시판</strong>입니다.</p>
+    <button class="btn write-btn">게시물 작성</button>
+
+    <section class="post-list">
+    
+    </section>
+
+    <!-- 더보기 버튼 & 스피너 -->
+    <div style="text-align:center; margin:20px 0;">
+      <button id="load-more-btn" class="btn outline" style="max-width:200px; display:none;">더보기</button>
+      <div id="load-more-spinner" style="display:none; margin-top:8px; color:#666;">로딩 중...</div>
+    </div>
+  </main>
+  <script type="module" src="/component/dropdown.js"></script>
+  <script type="module" src="/pages/post-list.js"></script>
+</body>
+</html>

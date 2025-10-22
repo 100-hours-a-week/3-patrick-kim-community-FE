@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 작성 - 아무 말 대잔치</title>
+  <link rel="stylesheet" href="/component/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="left"><a class="icon-btn" href="post-list.html">←</a></div>
+    <h1>아무 말 대잔치</h1>
+    <div class="right dropdown">
+      <a class="icon-btn">👤</a>
+      <nav class="menu">
+        <a href="profile-edit.html">회원정보수정</a>
+        <a href="password-edit.html">비밀번호수정</a>
+        <a href="index.html" id="logout-btn">로그아웃</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 class="center">게시글 작성</h2>
+
+    <form class="card form" style="max-width:720px; margin-inline:auto;">
+      <div class="field">
+        <label class="label" for="title">제목*</label>
+        <input class="input" id="title" placeholder="제목을 입력해주세요. (최대 26글자)" />
+      </div>
+
+      <div class="field">
+        <label class="label" for="content">내용*</label>
+        <textarea class="textarea" id="content" placeholder="내용을 입력해주세요."></textarea>
+      </div>
+
+      <div class="field">
+        <small class="helper">* helper text</small>
+        <label class="label" for="image">이미지</label>
+        <input class="file" id="image" type="file">
+        <small class="helper">파일을 선택해주세요.</small>
+      </div>
+
+      <button class="btn">완료</button>
+    </form>
+  </main>
+  <script type="module" src="/component/dropdown.js"></script>
+  <script type="module" src="/pages/post-new.js"></script>
+</body>
+</html>

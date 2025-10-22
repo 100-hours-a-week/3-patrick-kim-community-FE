@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 수정 - 아무 말 대잔치</title>
+  <link rel="stylesheet" href="/component/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="left"><a class="icon-btn" href="post-detail.html">←</a></div>
+    <h1>아무 말 대잔치</h1>
+    <div class="right dropdown">
+      <a class="icon-btn">👤</a>
+      <nav class="menu">
+        <a href="profile-edit.html">회원정보수정</a>
+        <a href="password-edit.html">비밀번호수정</a>
+        <a href="index.html" id="logout-btn">로그아웃</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 class="center">게시글 수정</h2>
+
+    <form class="card form" style="max-width:720px; margin-inline:auto;">
+      <div class="field">
+        <label class="label" for="title">제목*</label>
+        <input class="input" id="title" placeholder="제목을 입력해주세요 (최대 26자)" maxlength="26" />
+        <small class="helper" id="title-count">0 / 26</small>
+      </div>
+
+      <div class="field">
+        <label class="label" for="content">내용*</label>
+        <textarea class="textarea" id="content" placeholder="내용을 입력해주세요 (최대 255자)" rows="10" maxlength="255"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="label" for="image">이미지</label>
+        <input class="file" id="image" type="file" accept="image/*">
+        <small class="helper">* 새 이미지를 선택하면 기존 이미지를 대체합니다</small>
+      </div>
+
+      <button class="btn" type="submit">수정하기</button>
+    </form>
+  </main>
+  <script type="module" src="/component/dropdown.js"></script>
+  <script type="module" src="/pages/post-edit.js"></script>
+</body>
+</html>

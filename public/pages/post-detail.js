@@ -1,5 +1,5 @@
 // 게시글 상세 페이지 로직
-import { getPostDetail, addLike, removeLike } from '/api/posts.js';
+import { getPostDetail, addLike, removeLike, deletePost } from '/api/posts.js';
 import { formatDateTime } from '/lib/datetime.js';
 
 let currentPostId = null;
@@ -53,6 +53,26 @@ function updateLikeUI() {
         likePill.classList.add('liked');
       }
     }
+  }
+}
+
+async function handleDelete() {
+  if (!currentPostId) return;
+  
+  const confirmed = confirm('정말 삭제하시겠습니까?');
+  if (!confirmed) return;
+  
+  try {
+    const result = await deletePost(currentPostId);
+    if (result?.isSuccess) {
+      alert('게시글이 삭제되었습니다.');
+      window.location.href = '/pages/post-list.html';
+    } else {
+      throw new Error(result?.message || '게시글 삭제 실패');
+    }
+  } catch (e) {
+    console.error('게시글 삭제 실패:', e);
+    alert(`게시글 삭제 실패: ${e.message || e}`);
   }
 }
 
@@ -129,6 +149,12 @@ function updateLikeUI() {
       const url = new URL(editLink.getAttribute('href'), window.location.origin);
       url.searchParams.set('postId', postId);
       editLink.setAttribute('href', `${url.pathname}${url.search}`);
+    }
+    
+    // 삭제 버튼 이벤트
+    const deleteBtn = qs('.inline-actions button.btn.outline.danger');
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', handleDelete);
     }
   } catch (e) {
     console.error('게시글 상세 조회 실패:', e);

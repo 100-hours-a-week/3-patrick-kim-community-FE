@@ -71,3 +71,14 @@ export async function removeLike(postId) {
   return result;
 }
 
+/**
+ * 게시글 삭제
+ * @param {number} postId - 게시글 ID
+ * @returns {Promise<{isSuccess:boolean, message:string}>}
+ */
+export async function deletePost(postId) {
+  const result = await request(`/posts/${postId}`, {
+    method: 'DELETE',
+  });
+  return result;
+}

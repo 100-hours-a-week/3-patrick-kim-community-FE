@@ -88,5 +88,31 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
 
 
 
+// 비밀번호 일치 여부 실시간 확인
+const passwordInput = document.getElementById('signup-password');
+const confirmInput = document.getElementById('signup-confirm');
+
+const passwordMatchMsg = document.getElementById('password-match-msg');
+
+passwordInput.addEventListener('input', checkPasswordMatch);
+confirmInput.addEventListener('input', checkPasswordMatch);
+
+function checkPasswordMatch() {
+    if (passwordInput.value && confirmInput.value) {
+        if (passwordInput.value === confirmInput.value) {
+            passwordMatchMsg.textContent = '비밀번호가 일치합니다.';
+            passwordMatchMsg.style.color = 'green';
+        } else {
+            passwordMatchMsg.textContent = '비밀번호가 일치하지 않습니다.';
+            passwordMatchMsg.style.color = 'red';
+        }
+    } else {
+        passwordMatchMsg.textContent = '';
+    }
+}
+
+
+
+
 
 

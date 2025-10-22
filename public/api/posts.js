@@ -30,5 +30,21 @@ export async function getPostDetail(postId) {
     return result;
 }
 
+/**
+ * 게시글 작성
+ * @param {Object} data - { title, content, postImageId? }
+ * @returns {Promise<{isSuccess:boolean, message:string, data:{postId:number}}>}
+ */
+export async function createPost({ title, content, postImageId }) {
+  const result = await request('/posts', {
+    method: 'POST',
+    body: {
+      title,
+      content,
+      ...(postImageId ? { postImageId } : {}),
+    },
+  });
+  return result;
+}
 
 

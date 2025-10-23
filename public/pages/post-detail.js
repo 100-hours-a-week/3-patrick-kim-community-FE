@@ -2,6 +2,10 @@
 import { getPostDetail, addLike, removeLike, deletePost } from '/api/posts.js';
 import { getComments, createComment, updateComment, deleteComment } from '/api/comments.js';
 import { formatDateTime } from '/lib/datetime.js';
+import { loadHeader, loadFooter } from '/component/layout.js';
+
+await loadHeader(true, '/pages/post-list.html'); // 뒤로가기 버튼 있는 헤더
+await loadFooter();
 
 let currentPostId = null;
 let isLiked = false;

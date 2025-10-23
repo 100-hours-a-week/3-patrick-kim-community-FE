@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>아무 말 대잔치</title>
+  <link rel="stylesheet" href="/component/style.css" />
+</head>
+<body>
+  <!-- 헤더 영역 -->
+  <div id="header"></div>
+
+  <!-- 메인 콘텐츠 영역 -->
+  <main class="container">
+    <div id="content">
+      <!-- 각 페이지별 콘텐츠가 들어갈 자리 -->
+    </div>
+  </main>
+
+  <!-- 푸터 영역 -->
+  <div id="footer"></div>
+
+  <!-- 공통 레이아웃 로드 -->
+  <script type="module">
+    import { loadHeader, loadFooter } from '/component/layout.js';
+    loadHeader();
+    loadFooter();
+  </script>
+</body>
+</html>

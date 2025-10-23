@@ -1,6 +1,10 @@
 // 게시글 작성 페이지 로직
 import { createPost } from '/api/posts.js';
 import { uploadImage } from '/api/image.js';
+import { loadHeader, loadFooter } from '/component/layout.js';
+
+await loadHeader(true, '/pages/post-list.html'); // 뒤로가기 버튼 있는 헤더
+await loadFooter();
 
 document.querySelector('form')?.addEventListener('submit', async (e) => {
   e.preventDefault();

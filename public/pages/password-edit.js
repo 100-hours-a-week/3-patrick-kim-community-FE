@@ -1,6 +1,9 @@
 import { changePassword } from '/api/member.js';
 import { isValidPassword } from '/lib/validators.js';
+import { loadHeader, loadFooter } from '/component/layout.js';
 
+await loadHeader();
+await loadFooter();
 
 // 비밀번호 실시간 유효성 검사
 const pwInput = document.getElementById('pw');

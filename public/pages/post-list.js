@@ -1,6 +1,12 @@
 // 게시글 목록 페이지 로직 (더보기 버튼 방식)
 import { getPosts } from '/api/posts.js';
 import { formatDateTime } from '/lib/datetime.js';
+import { requireAuth } from '/lib/auth.js';
+import { loadHeader, loadFooter } from '/component/layout.js';
+
+requireAuth();
+await loadHeader();
+await loadFooter();
 
 // 상태 관리 (새로고침 시 초기화)
 let cursorId = null;

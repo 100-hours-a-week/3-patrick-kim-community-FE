@@ -1,6 +1,10 @@
 // 게시글 수정 페이지 로직
 import { getPostDetail, updatePost } from '/api/posts.js';
 import { uploadImage } from '/api/image.js';
+import { loadHeader, loadFooter } from '/component/layout.js';
+
+await loadHeader(true, 'javascript:history.back()'); // 뒤로가기 버튼 있는 헤더
+await loadFooter();
 
 let currentPostId = null;
 let currentImageId = null;

@@ -1,7 +1,7 @@
 // 드롭다운 메뉴 토글 기능 (ESM)
 import { logout } from '/api/auth.js';
 
-document.addEventListener('DOMContentLoaded', function() {
+export function initDropdown() {
   const dropdowns = document.querySelectorAll('.dropdown');
   
   dropdowns.forEach(dropdown => {
@@ -47,10 +47,17 @@ document.addEventListener('DOMContentLoaded', function() {
           alert('로그아웃 되었습니다.');
           window.location.href = '/pages/index.html';
         } catch (error) {
-        console.log('로그아웃 실패:', error);
+          console.log('로그아웃 실패:', error);
           alert('로그아웃에 실패했습니다. 다시 시도해주세요.');
         }
       }
     });
   });
-});
+}
+
+// 자동 실행 (기존 페이지 호환성)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initDropdown);
+} else {
+  initDropdown();
+}

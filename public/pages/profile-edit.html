@@ -7,17 +7,7 @@
   <link rel="stylesheet" href="/component/style.css">
 </head>
 <body>
-  <header class="header">
-    <h1>아무 말 대잔치</h1>
-    <div class="right dropdown">
-      <a class="icon-btn">👤</a>
-      <nav class="menu">
-        <a href="profile-edit.html">회원정보수정</a>
-        <a href="password-edit.html">비밀번호수정</a>
-        <a href="index.html">로그아웃</a>
-      </nav>
-    </div>
-  </header>
+  <div id="header"></div>
 
   <main class="container">
     <h2 class="center">회원정보수정</h2>
@@ -45,7 +35,9 @@
       <div class="center"><button type="button" class="btn" style="width:auto; padding-inline:18px;">수정완료</button></div>
     </form>
   </main>
-  <script type="module" src="/component/dropdown.js"></script>
+
+  <div id="footer"></div>
+
   <script type="module" src="/pages/profile-edit.js"></script>
 </body>
 </html>

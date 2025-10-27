@@ -1,6 +1,7 @@
 import { signup } from '/api/auth.js';
 import { uploadImage } from '/api/image.js';
 import { isValidEmail, isValidPassword, isValidNickname } from '/lib/validators.js';
+import { showSuccess, showError, showWarning } from '/lib/toast.js';
 
 // 프로필 이미지 선택 및 미리보기
 const profileImageInput = document.getElementById('profile-image');
@@ -41,26 +42,26 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
     
     
     if (!email || !password || !confirmPassword || !nickname) {
-        alert('모든 필드를 입력하세요.');
+        showWarning('모든 필드를 입력하세요.');
         return;
     }
     
     if (password !== confirmPassword) {
-        alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+        showError('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
         return;
     }
 
         // 유효성 검증 (공통 유틸 사용)
         if (!isValidEmail(email)) {
-            alert('유효한 이메일 주소를 입력하세요.');
+            showError('유효한 이메일 주소를 입력하세요.');
             return;
         }
         if (!isValidPassword(password)) {
-            alert('비밀번호는 최소 8자 이상이며, 영문자와 숫자를 모두 포함해야 합니다.');
+            showError('비밀번호는 최소 8자 이상이며, 영문자와 숫자를 모두 포함해야 합니다.');
             return;
         }
         if (!isValidNickname(nickname)) {
-            alert('닉네임은 2자 이상 20자 이하이어야 합니다.');
+            showError('닉네임은 2자 이상 20자 이하이어야 합니다.');
             return;
         }
 
@@ -78,11 +79,13 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
         }
         // 회원가입 API 호출
         const result = await signup(email, password, nickname, profileImageId);
-        alert('회원가입 성공! 로그인 페이지로 이동합니다.');
-        window.location.href = '/pages/index.html';
+        showSuccess('회원가입 성공! 로그인 페이지로 이동합니다.');
+        setTimeout(() => {
+            window.location.href = '/pages/index.html';
+        }, 1000);
     } catch (error) {
         console.error('회원가입 실패:', error);
-        alert(`회원가입 실패: ${error?.message || '다시 시도해주세요.'}`);
+        showError(`회원가입 실패: ${error?.message || '다시 시도해주세요.'}`);
     }
 });
 

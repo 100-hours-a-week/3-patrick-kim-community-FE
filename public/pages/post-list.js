@@ -3,6 +3,7 @@ import { getPosts } from '/api/posts.js';
 import { formatDateTime } from '/lib/datetime.js';
 import { requireAuth } from '/lib/auth.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
+import { showError } from '/lib/toast.js';
 
 requireAuth();
 await loadHeader();
@@ -62,7 +63,7 @@ async function loadMore() {
     }
   } catch (e) {
     console.error('게시글 목록 조회 실패:', e);
-    alert(`게시글 목록 조회 실패: ${e.message || e}`);
+    showError(`게시글 목록 조회 실패: ${e.message || e}`);
   } finally {
     isLoading = false;
     if (loadMoreBtn) loadMoreBtn.disabled = false;

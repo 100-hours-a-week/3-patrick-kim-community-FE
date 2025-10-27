@@ -1,6 +1,7 @@
 // 로그인 폼 제출 시 로그인 API 호출 (ESM)
 import { login } from '/api/auth.js';
 import { redirectIfLoggedIn } from '/lib/auth.js';
+import { showSuccess, showError, showWarning } from '/lib/toast.js';
 
 
 (function () {
@@ -15,17 +16,19 @@ import { redirectIfLoggedIn } from '/lib/auth.js';
         const password = document.getElementById('password')?.value;
 
         if (!email || !password) {
-            alert('이메일과 비밀번호를 입력하세요.');
+            showWarning('이메일과 비밀번호를 입력하세요.');
             return;
         }
 
         try {
             const result = await login(email, password);
-            alert('로그인 성공');
+            showSuccess('로그인 성공! 게시판으로 이동합니다.');
             // 로그인 성공 시 게시판으로 이동
-            window.location.href = '/pages/post-list.html';
+            setTimeout(() => {
+                window.location.href = '/pages/post-list.html';
+            }, 500);
         } catch (error) {
-            alert(`로그인 실패: ${error?.message || '다시 시도해주세요.'}`);
+            showError(`로그인 실패: ${error?.message || '다시 시도해주세요.'}`);
         }
     });
 })();

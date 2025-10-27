@@ -3,6 +3,8 @@ import { getPostDetail, addLike, removeLike, deletePost } from '/api/posts.js';
 import { getComments, createComment, updateComment, deleteComment } from '/api/comments.js';
 import { formatDateTime } from '/lib/datetime.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
+import { showSuccess, showError, showWarning } from '/lib/toast.js';
+import { showConfirmModal, showInputModal } from '/lib/modal.js';
 
 await loadHeader(true, '/pages/post-list.html'); // 뒤로가기 버튼 있는 헤더
 await loadFooter();
@@ -10,6 +12,7 @@ await loadFooter();
 let currentPostId = null;
 let isLiked = false;
 let likeCount = 0;
+let commentCount = 0; // 댓글 수 추적
 
 // 댓글 페이지네이션 상태
 let commentCursorId = null;
@@ -44,25 +47,39 @@ async function toggleLike() {
     }
   } catch (e) {
     console.error('좋아요 토글 실패:', e);
-    alert(`좋아요 처리 실패: ${e.message || e}`);
+    showError(`좋아요 처리 실패: ${e.message || e}`);
   }
 }
 
 function updateLikeUI() {
   const statsEl = qs('.stats');
-  if (statsEl) {
-    const likePill = statsEl.querySelector('.stat-pill.like-pill');
-    if (likePill) {
-      likePill.innerHTML = `<span class="like-icon">❤️</span><strong>${likeCount}</strong><span>좋아요수</span>`;
-      likePill.style.cursor = 'pointer';
-      likePill.style.backgroundColor = isLiked ? '#FEE500' : '#f8f8f8';
-      
-      // 애니메이션 클래스 추가 후 제거
-      likePill.classList.remove('liked');
-      void likePill.offsetWidth; // 리플로우 강제 (애니메이션 재시작)
-      if (isLiked) {
-        likePill.classList.add('liked');
-      }
+  if (!statsEl) return;
+  
+  const likePill = statsEl.querySelector('.stat-pill.like-pill');
+  if (!likePill) return;
+  
+  likePill.className = `stat-pill like-pill${isLiked ? ' liked' : ''}`;
+  likePill.style.backgroundColor = isLiked ? '#FEE500' : '#f8f8f8';
+  likePill.innerHTML = `<span class="like-icon">❤️</span><strong>${likeCount}</strong><span>좋아요수</span>`;
+  
+  // 애니메이션 효과
+  if (isLiked) {
+    likePill.classList.add('heartPulse');
+    setTimeout(() => likePill.classList.remove('heartPulse'), 300);
+  }
+}
+
+// 댓글 수 업데이트 UI
+function updateCommentCountUI() {
+  const statsEl = qs('.stats');
+  if (!statsEl) return;
+  
+  const commentPills = statsEl.querySelectorAll('.stat-pill');
+  const commentPill = commentPills[2]; // 세 번째 stat-pill이 댓글
+  if (commentPill) {
+    const strong = commentPill.querySelector('strong');
+    if (strong) {
+      strong.textContent = commentCount;
     }
   }
 }
@@ -70,20 +87,31 @@ function updateLikeUI() {
 async function handleDelete() {
   if (!currentPostId) return;
   
-  const confirmed = confirm('정말 삭제하시겠습니까?');
+  const confirmed = await showConfirmModal(
+    '게시글 삭제',
+    '정말 삭제하시겠습니까?',
+    {
+      isDanger: true,
+      confirmText: '삭제',
+      cancelText: '취소'
+    }
+  );
+  
   if (!confirmed) return;
   
   try {
     const result = await deletePost(currentPostId);
     if (result?.isSuccess) {
-      alert('게시글이 삭제되었습니다.');
-      window.location.href = '/pages/post-list.html';
+      showSuccess('게시글이 삭제되었습니다.');
+      setTimeout(() => {
+        window.location.href = '/pages/post-list.html';
+      }, 500);
     } else {
       throw new Error(result?.message || '게시글 삭제 실패');
     }
   } catch (e) {
     console.error('게시글 삭제 실패:', e);
-    alert(`게시글 삭제 실패: ${e.message || e}`);
+    showError(`게시글 삭제 실패: ${e.message || e}`);
   }
 }
 
@@ -130,20 +158,30 @@ async function handleCreateComment() {
   const content = textarea?.value?.trim();
   
   if (!content) {
-    alert('댓글 내용을 입력해주세요.');
+    showWarning('댓글 내용을 입력해주세요.');
+    textarea?.focus();
+    return;
+  }
+  
+  // 댓글 길이 검증 (최대 255자)
+  if (content.length > 255) {
+    showWarning('댓글은 최대 255자까지 입력 가능합니다.');
     textarea?.focus();
     return;
   }
   
   if (!currentPostId) {
-    alert('게시글 ID가 없습니다.');
+    showError('게시글 ID가 없습니다.');
     return;
   }
   
   try {
     const result = await createComment(currentPostId, content);
     if (result?.isSuccess) {
-      alert('댓글이 작성되었습니다.');
+      showSuccess('댓글이 작성되었습니다.');
+      // 댓글 수 증가
+      commentCount++;
+      updateCommentCountUI();
       // 댓글 목록 새로고침
       commentCursorId = null;
       hasNextComments = true;
@@ -157,7 +195,7 @@ async function handleCreateComment() {
     }
   } catch (e) {
     console.error('댓글 작성 실패:', e);
-    alert(`댓글 작성 실패: ${e.message || e}`);
+    showError(`댓글 작성 실패: ${e.message || e}`);
   }
 }
 
@@ -166,17 +204,28 @@ async function handleEditComment(commentId, commentEl) {
   const contentEl = commentEl.querySelector('.comment-content');
   const currentContent = contentEl?.textContent || '';
   
-  const newContent = prompt('댓글을 수정하세요:', currentContent);
+  const newContent = await showInputModal('댓글 수정', currentContent, {
+    placeholder: '댓글 내용을 입력하세요 (최대 255자)',
+    confirmText: '수정',
+    cancelText: '취소'
+  });
+  
   if (newContent === null) return; // 취소
   if (!newContent.trim()) {
-    alert('댓글 내용을 입력해주세요.');
+    showWarning('댓글 내용을 입력해주세요.');
+    return;
+  }
+  
+  // 댓글 길이 검증 (최대 255자)
+  if (newContent.trim().length > 255) {
+    showWarning('댓글은 최대 255자까지 입력 가능합니다.');
     return;
   }
   
   try {
     const result = await updateComment(commentId, newContent.trim());
     if (result?.isSuccess) {
-      alert('댓글이 수정되었습니다.');
+      showSuccess('댓글이 수정되었습니다.');
       // 댓글 내용만 업데이트
       if (contentEl) contentEl.textContent = newContent.trim();
     } else {
@@ -184,19 +233,31 @@ async function handleEditComment(commentId, commentEl) {
     }
   } catch (e) {
     console.error('댓글 수정 실패:', e);
-    alert(`댓글 수정 실패: ${e.message || e}`);
+    showError(`댓글 수정 실패: ${e.message || e}`);
   }
 }
 
 // 댓글 삭제
 async function handleDeleteComment(commentId, commentEl) {
-  const confirmed = confirm('정말 삭제하시겠습니까?');
+  const confirmed = await showConfirmModal(
+    '댓글 삭제',
+    '정말 삭제하시겠습니까?',
+    {
+      isDanger: true,
+      confirmText: '삭제',
+      cancelText: '취소'
+    }
+  );
+  
   if (!confirmed) return;
   
   try {
     const result = await deleteComment(commentId);
     if (result?.isSuccess) {
-      alert('댓글이 삭제되었습니다.');
+      showSuccess('댓글이 삭제되었습니다.');
+      // 댓글 수 감소
+      commentCount--;
+      updateCommentCountUI();
       // DOM에서 제거
       commentEl?.remove();
     } else {
@@ -204,7 +265,7 @@ async function handleDeleteComment(commentId, commentEl) {
     }
   } catch (e) {
     console.error('댓글 삭제 실패:', e);
-    alert(`댓글 삭제 실패: ${e.message || e}`);
+    showError(`댓글 삭제 실패: ${e.message || e}`);
   }
 }
 
@@ -241,7 +302,7 @@ async function loadMoreComments() {
     }
   } catch (e) {
     console.error('댓글 목록 조회 실패:', e);
-    alert(`댓글 목록 조회 실패: ${e.message || e}`);
+    showError(`댓글 목록 조회 실패: ${e.message || e}`);
   } finally {
     isLoadingComments = false;
     if (loadMoreBtn) loadMoreBtn.disabled = false;
@@ -255,8 +316,10 @@ async function loadMoreComments() {
   currentPostId = postId;
   
   if (!postId) {
-    alert('잘못된 접근입니다. 게시글 ID가 없습니다.');
-    window.location.href = '/pages/post-list.html';
+    showError('잘못된 접근입니다. 게시글 ID가 없습니다.');
+    setTimeout(() => {
+      window.location.href = '/pages/post-list.html';
+    }, 1000);
     return;
   }
 
@@ -271,6 +334,9 @@ async function loadMoreComments() {
     // 좋아요 상태 저장
     isLiked = liked;
     likeCount = likes;
+    
+    // 댓글 수 저장
+    commentCount = comments;
 
     // 제목
     setText(qs('.post-title'), title || '제목 없음');
@@ -340,9 +406,25 @@ async function loadMoreComments() {
     // 댓글 등록 버튼 이벤트
     const createCommentBtn = qs('.comment-editor .btn');
     createCommentBtn?.addEventListener('click', handleCreateComment);
+    
+    // 댓글 입력 글자 수 카운터
+    const commentTextarea = qs('.comment-editor textarea');
+    const charCount = qs('.char-count');
+    if (commentTextarea && charCount) {
+      commentTextarea.addEventListener('input', () => {
+        const length = commentTextarea.value.length;
+        charCount.textContent = `${length} / 255`;
+        // 255자 초과 시 빨간색으로 표시
+        if (length > 255) {
+          charCount.style.color = '#ff4444';
+        } else {
+          charCount.style.color = '#999';
+        }
+      });
+    }
   } catch (e) {
     console.error('게시글 상세 조회 실패:', e);
-    alert(`게시글 상세 조회 실패: ${e.message || e}`);
+    showError(`게시글 상세 조회 실패: ${e.message || e}`);
     window.location.href = '/pages/post-list.html';
   }
 })();

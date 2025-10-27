@@ -2,6 +2,7 @@
 import { getPostDetail, updatePost } from '/api/posts.js';
 import { uploadImage } from '/api/image.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
+import { showSuccess, showError, showWarning } from '/lib/toast.js';
 
 await loadHeader(true, 'javascript:history.back()'); // 뒤로가기 버튼 있는 헤더
 await loadFooter();
@@ -25,8 +26,10 @@ async function loadPostData() {
   currentPostId = postId;
 
   if (!postId) {
-    alert('잘못된 접근입니다. 게시글 ID가 없습니다.');
-    window.location.href = '/pages/post-list.html';
+    showError('잘못된 접근입니다. 게시글 ID가 없습니다.');
+    setTimeout(() => {
+      window.location.href = '/pages/post-list.html';
+    }, 1000);
     return;
   }
 
@@ -53,8 +56,10 @@ async function loadPostData() {
     }
   } catch (e) {
     console.error('게시글 로드 실패:', e);
-    alert(`게시글 로드 실패: ${e.message || e}`);
-    window.location.href = '/pages/post-list.html';
+    showError(`게시글 로드 실패: ${e.message || e}`);
+    setTimeout(() => {
+      window.location.href = '/pages/post-list.html';
+    }, 1000);
   }
 }
 
@@ -63,7 +68,7 @@ async function handleUpdate(e) {
   e.preventDefault();
 
   if (!currentPostId) {
-    alert('게시글 ID가 없습니다.');
+    showError('게시글 ID가 없습니다.');
     return;
   }
 
@@ -74,22 +79,22 @@ async function handleUpdate(e) {
 
   // 유효성 검사
   if (!title) {
-    alert('제목을 입력해주세요.');
+    showWarning('제목을 입력해주세요.');
     titleInput?.focus();
     return;
   }
   if (title.length > 26) {
-    alert('제목은 최대 26자까지 입력 가능합니다.');
+    showError('제목은 최대 26자까지 입력 가능합니다.');
     titleInput?.focus();
     return;
   }
   if (!content) {
-    alert('내용을 입력해주세요.');
+    showWarning('내용을 입력해주세요.');
     contentInput?.focus();
     return;
   }
   if (content.length > 255) {
-    alert('내용은 최대 255자까지 입력 가능합니다.');
+    showError('내용은 최대 255자까지 입력 가능합니다.');
     contentInput?.focus();
     return;
   }
@@ -119,14 +124,16 @@ async function handleUpdate(e) {
     });
 
     if (res?.isSuccess) {
-      alert('게시글이 수정되었습니다.');
-      window.location.href = `/pages/post-detail.html?postId=${currentPostId}`;
+      showSuccess('게시글이 수정되었습니다.');
+      setTimeout(() => {
+        window.location.href = `/pages/post-detail.html?postId=${currentPostId}`;
+      }, 500);
     } else {
       throw new Error(res?.message || '게시글 수정 실패');
     }
   } catch (e) {
     console.error('게시글 수정 실패:', e);
-    alert(`게시글 수정 실패: ${e.message || e}`);
+    showError(`게시글 수정 실패: ${e.message || e}`);
   } finally {
     const submitBtn = qs('.btn[type="submit"]');
     if (submitBtn) {

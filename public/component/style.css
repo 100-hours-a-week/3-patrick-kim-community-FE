@@ -2,6 +2,8 @@
    리셋 & 기본 스타일
    =========================== */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+@import url('/component/toast.css');
+@import url('/component/modal.css');
 
 * {
   margin: 0;

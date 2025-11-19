@@ -9,7 +9,17 @@ function isJSONResponse(response) {
 
 export async function request(path, { method = 'GET', headers = {}, body, query, raw = false } = {}) {
   // query string
-  const url = new URL(path.startsWith('http') ? path : `${BASE_URL}${path}`);
+  // BASE_URL이 상대 경로(/api)인 경우를 처리
+  let url;
+  if (path.startsWith('http')) {
+    url = new URL(path);
+  } else if (BASE_URL.startsWith('http')) {
+    url = new URL(path, BASE_URL);
+  } else {
+    // BASE_URL이 /api 같은 상대 경로인 경우
+    url = new URL(`${BASE_URL}${path}`, window.location.origin);
+  }
+  
   if (query && typeof query === 'object') {
     Object.entries(query).forEach(([k, v]) => {
       if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, v);

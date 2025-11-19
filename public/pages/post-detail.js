@@ -1,6 +1,6 @@
 // 게시글 상세 페이지 로직
-import { getPostDetail, addLike, removeLike, deletePost } from '/api/posts.js';
-import { getComments, createComment, updateComment, deleteComment } from '/api/comments.js';
+import { getPostDetail, addLike, removeLike, deletePost } from '/js-api/posts.js';
+import { getComments, createComment, updateComment, deleteComment } from '/js-api/comments.js';
 import { formatDateTime } from '/lib/datetime.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
 import { showSuccess, showError, showWarning } from '/lib/toast.js';

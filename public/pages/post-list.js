@@ -1,5 +1,5 @@
 // 게시글 목록 페이지 로직 (더보기 버튼 방식)
-import { getPosts } from '/api/posts.js';
+import { getPosts } from '/js-api/posts.js';
 import { formatDateTime } from '/lib/datetime.js';
 import { requireAuth } from '/lib/auth.js';
 import { loadHeader, loadFooter } from '/component/layout.js';

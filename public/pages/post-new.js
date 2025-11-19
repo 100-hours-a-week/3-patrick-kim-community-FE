@@ -1,6 +1,6 @@
 // 게시글 작성 페이지 로직
-import { createPost } from '/api/posts.js';
-import { uploadImage } from '/api/image.js';
+import { createPost } from '/js-api/posts.js';
+import { uploadImage } from '/js-api/image.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
 import { showSuccess, showError, showWarning } from '/lib/toast.js';
 

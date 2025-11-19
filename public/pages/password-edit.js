@@ -1,4 +1,4 @@
-import { changePassword } from '/api/member.js';
+import { changePassword } from '/js-api/member.js';
 import { isValidPassword } from '/lib/validators.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
 import { showSuccess, showError, showWarning } from '/lib/toast.js';

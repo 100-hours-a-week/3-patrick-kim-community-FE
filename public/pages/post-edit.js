@@ -1,6 +1,6 @@
 // 게시글 수정 페이지 로직
-import { getPostDetail, updatePost } from '/api/posts.js';
-import { uploadImage } from '/api/image.js';
+import { getPostDetail, updatePost } from '/js-api/posts.js';
+import { uploadImage } from '/js-api/image.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
 import { showSuccess, showError, showWarning } from '/lib/toast.js';
 

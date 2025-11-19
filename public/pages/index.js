@@ -1,5 +1,5 @@
 // 로그인 폼 제출 시 로그인 API 호출 (ESM)
-import { login } from '/api/auth.js';
+import { login } from '/js-api/auth.js';
 import { redirectIfLoggedIn } from '/lib/auth.js';
 import { showSuccess, showError, showWarning } from '/lib/toast.js';
 

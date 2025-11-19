@@ -1,5 +1,5 @@
-import { getMyProfile, updateMyProfile } from '/api/member.js';
-import { uploadImage } from '/api/image.js';
+import { getMyProfile, updateMyProfile } from '/js-api/member.js';
+import { uploadImage } from '/js-api/image.js';
 import { isValidNickname } from '/lib/validators.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
 import { showSuccess, showError } from '/lib/toast.js';

@@ -1,5 +1,5 @@
-import { signup } from '/api/auth.js';
-import { uploadImage } from '/api/image.js';
+import { signup } from '/js-api/auth.js';
+import { uploadImage } from '/js-api/image.js';
 import { isValidEmail, isValidPassword, isValidNickname } from '/lib/validators.js';
 import { showSuccess, showError, showWarning } from '/lib/toast.js';
 

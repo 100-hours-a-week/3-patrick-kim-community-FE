@@ -1,7 +1,8 @@
-import { getMyProfile, updateMyProfile } from '/api/member.js';
-import { uploadImage } from '/api/image.js';
+import { getMyProfile, updateMyProfile } from '/js-api/member.js';
+import { uploadImage } from '/js-api/image.js';
 import { isValidNickname } from '/lib/validators.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
+import { showSuccess, showError } from '/lib/toast.js';
 
 await loadHeader();
 await loadFooter();
@@ -20,7 +21,7 @@ let currentImageUrl = '';
       document.getElementById('profile-image-preview').src = currentImageUrl || '/public/component/default-profile.png';
     }
   } catch (e) {
-    alert('회원정보를 불러오지 못했습니다.');
+    showError('회원정보를 불러오지 못했습니다.');
   }
 
   // 이미지 미리보기 및 파일 선택
@@ -73,13 +74,13 @@ let currentImageUrl = '';
     try {
       const res = await updateMyProfile({ nickname, profileImageId });
       if (res?.isSuccess) {
-        alert('회원정보가 수정되었습니다.');
+        showSuccess('회원정보가 수정되었습니다.');
         // 수정완료 버튼에서만 이동
       } else {
         throw new Error(res?.message || '수정 실패');
       }
     } catch (e) {
-      alert('회원정보 수정 실패: ' + (e.message || e));
+      showError('회원정보 수정 실패: ' + (e.message || e));
     }
   });
 

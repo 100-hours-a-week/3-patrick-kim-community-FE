@@ -37,8 +37,9 @@
       </div>
 
       <section class="comment-editor">
-        <textarea class="textarea" placeholder="댓글을 남겨주세요!"></textarea>
-        <div style="display:flex; justify-content:flex-end;">
+        <textarea class="textarea" placeholder="댓글을 남겨주세요! (최대 255자)" maxlength="255"></textarea>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="char-count" style="color:#999; font-size:13px;">0 / 255</span>
           <button class="btn" style="max-width:140px;">댓글 등록</button>
         </div>
       </section>

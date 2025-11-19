@@ -5,7 +5,6 @@ const path = require('path');
 // express 인스턴스 생성
 const app = express();
 
-
 // 포트 정보
 const port = process.env.PORT || 3000;
 
@@ -33,8 +32,8 @@ app.get('/password', (req, res) => res.redirect('/pages/password-edit.html'));
 
 // 페이지들은 /component/app.css를 직접 링크하도록 변경됨
 
-// 서버 시작
-app.listen(port, () => {
-	console.log(`Server listening on http://localhost:${port}`);
+// 서버 시작 (0.0.0.0으로 바인딩하여 컨테이너 외부에서 접속 가능)
+app.listen(port, '0.0.0.0', () => {
+	console.log(`Server listening on http://0.0.0.0:${port}`);
 });
 

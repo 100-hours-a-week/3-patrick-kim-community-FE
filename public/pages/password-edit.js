@@ -1,6 +1,7 @@
-import { changePassword } from '/api/member.js';
+import { changePassword } from '/js-api/member.js';
 import { isValidPassword } from '/lib/validators.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
+import { showSuccess, showError, showWarning } from '/lib/toast.js';
 
 await loadHeader();
 await loadFooter();
@@ -55,7 +56,7 @@ document.querySelector('form')?.addEventListener('submit', async (e) => {
   const newPassword = pwInput.value;
   const newPassword2 = pw2Input.value;
   if (!currentPassword || !newPassword || !newPassword2) {
-    alert('모든 항목을 입력해주세요.');
+    showWarning('모든 항목을 입력해주세요.');
     return;
   }
   if (!validatePw() || !validatePw2()) {
@@ -64,12 +65,14 @@ document.querySelector('form')?.addEventListener('submit', async (e) => {
   try {
     const res = await changePassword(currentPassword, newPassword);
     if (res?.isSuccess) {
-      alert('비밀번호가 변경되었습니다. 다시 로그인 해주세요.');
-      location.href = '/pages/index.html';
+      showSuccess('비밀번호가 변경되었습니다. 다시 로그인 해주세요.');
+      setTimeout(() => {
+        location.href = '/pages/index.html';
+      }, 1000);
     } else {
       throw new Error(res?.message || '변경 실패');
     }
   } catch (e) {
-    alert('비밀번호 변경 실패: ' + (e.message || e));
+    showError('비밀번호 변경 실패: ' + (e.message || e));
   }
 });

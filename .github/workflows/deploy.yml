@@ -1,0 +1,64 @@
+name: FE CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ] 
+
+env:
+  AWS_REGION: ap-northeast-2
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_URI }}
+  S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
+  CODE_DEPLOY_APP_NAME: ${{ secrets.CODEDEPLOY_APP_NAME }}
+  CODE_DEPLOY_GROUP_NAME: ${{ secrets.CODEDEPLOY_GROUP_NAME }}
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: latest 
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+  
+    - name: Inject Secrets into Deploy Script
+      run: |
+        sed -i "s|__ECR_REPO_URI__|${{ env.ECR_REPOSITORY }}|g" scripts/deploy.sh
+
+    - name: Zip Deploy Artifacts
+      run: |
+        zip -r ./deploy.zip ./appspec.yml ./scripts
+
+    - name: Upload to S3
+      run: |
+        aws s3 cp ./deploy.zip s3://$S3_BUCKET/deploy-${{ github.sha }}.zip
+
+    - name: Trigger CodeDeploy
+      run: |
+        aws deploy create-deployment \
+          --application-name ${{ env.CODE_DEPLOY_APP_NAME }} \
+          --deployment-config-name CodeDeployDefault.OneAtATime \
+          --deployment-group-name ${{ env.CODE_DEPLOY_GROUP_NAME }} \
+          --s3-location bucket=$S3_BUCKET,bundleType=zip,key=deploy-${{ github.sha }}.zip

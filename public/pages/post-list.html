@@ -10,18 +10,30 @@
   <div id="header"></div>
 
   <main class="sanmoon-container">
-    <div style="text-align: center; margin-bottom: 48px;">
-      <p style="font-size: 1.15rem; color: #787878; font-weight: 300; line-height: 1.9; margin: 0;">
-        안녕하세요,<br />
-        <strong style="color: #2C2C2C; font-weight: 500;">나의 산문집</strong>입니다.
+    <div style="text-align: center; margin-bottom: 56px;">
+      <p style="font-size: 1.3rem; color: #2C2C2C; font-weight: 300; line-height: 1.9; margin: 0 0 12px 0; letter-spacing: -0.01em;">
+        문득, 돌아보고 싶은 날들
+      </p>
+      <p style="font-size: 0.95rem; color: #787878; font-weight: 300; line-height: 1.7;">
+        당신의 계절이 쌓여가고 있습니다
       </p>
     </div>
 
-    <button class="btn write-btn">새 이야기 쓰기</button>
+    <button class="btn write-btn">빈 페이지 채우기</button>
 
-    <section class="post-list">
-
+    <section class="post-list" id="post-list-container">
+      <!-- 게시글이 동적으로 추가됩니다 -->
     </section>
+
+    <!-- Empty State -->
+    <div id="empty-state" style="display: none; text-align: center; padding: 80px 32px; color: #787878;">
+      <p style="font-size: 1.1rem; font-weight: 300; line-height: 2; margin-bottom: 32px;">
+        아직 남겨진 이야기가 없지만,<br/>
+        조급해하지 마세요<br/><br/>
+        특별한 날은 예고 없이 찾아오니까요
+      </p>
+      <p style="font-size: 0.95rem; opacity: 0.7;">오늘이 바로 그날인가요?</p>
+    </div>
 
     <!-- 더보기 버튼 & 스피너 -->
     <div style="text-align:center; margin: 48px 0;">

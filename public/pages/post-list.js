@@ -14,6 +14,7 @@ let cursorId = null;
 let hasNext = true;
 let isLoading = false;
 const limit = 10;
+let totalPostsLoaded = 0;
 
 function createPostItem(post) {
   const el = document.createElement('article');
@@ -36,7 +37,8 @@ async function loadMore() {
   const container = document.querySelector('.post-list');
   const loadMoreBtn = document.getElementById('load-more-btn');
   const spinner = document.getElementById('load-more-spinner');
-  
+  const emptyState = document.getElementById('empty-state');
+
   if (!container || isLoading || !hasNext) return;
 
   isLoading = true;
@@ -46,13 +48,25 @@ async function loadMore() {
   try {
     const res = await getPosts(cursorId, limit);
     if (!res?.isSuccess) throw new Error(res?.message || '목록 조회 실패');
-    
+
     const { posts = [], nextCursorId, hasNext: next } = res.data || {};
     posts.forEach(p => container.appendChild(createPostItem(p)));
-    
+
+    totalPostsLoaded += posts.length;
     cursorId = nextCursorId ?? null;
     hasNext = next ?? false;
-    
+
+    // Empty State 표시/숨김
+    if (emptyState) {
+      if (totalPostsLoaded === 0) {
+        emptyState.style.display = 'block';
+        container.style.display = 'none';
+      } else {
+        emptyState.style.display = 'none';
+        container.style.display = 'block';
+      }
+    }
+
     // 더보기 버튼 표시/숨김 처리
     if (loadMoreBtn) {
       if (hasNext) {

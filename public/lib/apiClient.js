@@ -14,7 +14,16 @@ export async function request(path, { method = 'GET', headers = {}, body, query,
   if (path.startsWith('http')) {
     url = new URL(path);
   } else if (BASE_URL.startsWith('http')) {
-    url = new URL(path, BASE_URL);
+    // BASE_URL이 http로 시작하고 path가 /로 시작하면, BASE_URL의 path 뒤에 붙이도록 처리
+    if (BASE_URL.endsWith('/') && path.startsWith('/')) {
+      url = new URL(BASE_URL + path.slice(1));
+    } else if (!BASE_URL.endsWith('/') && path.startsWith('/')) {
+      url = new URL(BASE_URL + path);
+    } else if (BASE_URL.endsWith('/') && !path.startsWith('/')) {
+      url = new URL(BASE_URL + path);
+    } else {
+      url = new URL(BASE_URL + '/' + path);
+    }
   } else {
     // BASE_URL이 /api 같은 상대 경로인 경우
     url = new URL(`${BASE_URL}${path}`, window.location.origin);

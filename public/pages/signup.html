@@ -3,51 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>회원가입 - 아무 말 대잔치</title>
+  <title>회원가입 - 산문집 Sanmoon</title>
   <link rel="stylesheet" href="/component/style.css" />
 </head>
-<body class="signup-page">
-  <header class="app-header">
-    <a href="index.html" class="back-btn">←</a>
-    <h1>아무 말 대잔치</h1>
-  </header>
-
-  <main class="container">
-    <h2 class="center">회원가입</h2>
-
-    <div class="profile-upload">
-      <input type="file" id="profile-image" accept="image/*" style="display: none;" />
-      <div class="profile-placeholder" id="profile-preview">+</div>
-      <small class="helper-text">이미지 업로드</small>
+<body class="sanmoon-bg">
+  <main class="container" style="padding-top: 80px; padding-bottom: 80px;">
+    <div style="text-align: center; margin-bottom: 56px;">
+      <a href="index.html" style="display: inline-block; color: #787878; font-size: 0.9rem; margin-bottom: 32px; transition: all 0.3s ease;">← 로그인으로 돌아가기</a>
+      <h2 style="font-size: 2rem; font-weight: 500; color: #2C2C2C; letter-spacing: -0.02em;">새로운 이야기를 시작하세요</h2>
+      <p style="font-size: 0.95rem; color: #787878; font-weight: 300; margin-top: 12px;">당신만의 산문집을 만들어보세요</p>
     </div>
 
-    <form class="card form-box" id="signup-form">
+    <div class="profile-upload" style="margin-bottom: 48px;">
+      <input type="file" id="profile-image" accept="image/*" style="display: none;" />
+      <div class="profile-placeholder" id="profile-preview" style="background-color: rgba(120, 120, 120, 0.08); color: #787878; font-size: 3rem;">+</div>
+      <small class="helper-text" style="text-align: center; display: block; margin-top: 12px;">프로필 이미지 (선택)</small>
+    </div>
+
+    <form class="form-box" id="signup-form" style="border: none;">
       <div class="form-group">
         <label for="signup-email">이메일</label>
-        <input type="email" id="signup-email" placeholder="이메일을 입력하세요" required />
+        <input type="email" id="signup-email" placeholder="이메일을 입력해주세요" required />
       </div>
 
       <div class="form-group">
         <label for="signup-password">비밀번호</label>
-        <input type="password" id="signup-password" placeholder="비밀번호를 입력하세요" required />
+        <input type="password" id="signup-password" placeholder="비밀번호를 입력해주세요" required />
       </div>
 
       <div class="form-group">
         <label for="signup-confirm">비밀번호 확인</label>
-        <input type="password" id="signup-confirm" placeholder="비밀번호를 다시 입력하세요" required />
+        <input type="password" id="signup-confirm" placeholder="비밀번호를 다시 한 번 입력해주세요" required />
         <small class="helper-text" id="password-match-msg"> </small>
       </div>
 
       <div class="form-group">
         <label for="nickname">닉네임</label>
-        <input type="text" id="nickname" placeholder="닉네임을 입력하세요" required />
+        <input type="text" id="nickname" placeholder="어떻게 불러드릴까요?" required />
       </div>
 
-      <button type="submit" class="btn">회원가입</button>
+      <button type="submit" class="btn">시작하기</button>
     </form>
 
     <div class="link-box">
-      <a href="index.html">로그인하러 가기</a>
+      <a href="index.html">이미 계정이 있으신가요?</a>
     </div>
   </main>
   <script type="module" src="/pages/signup.js"></script>

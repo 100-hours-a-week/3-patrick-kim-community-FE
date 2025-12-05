@@ -54,19 +54,13 @@ async function toggleLike() {
 function updateLikeUI() {
   const statsEl = qs('.stats');
   if (!statsEl) return;
-  
+
   const likePill = statsEl.querySelector('.stat-pill.like-pill');
   if (!likePill) return;
-  
-  likePill.className = `stat-pill like-pill${isLiked ? ' liked' : ''}`;
-  likePill.style.backgroundColor = isLiked ? '#FEE500' : '#f8f8f8';
-  likePill.innerHTML = `<span class="like-icon">❤️</span><strong>${likeCount}</strong><span>좋아요수</span>`;
-  
-  // 애니메이션 효과
-  if (isLiked) {
-    likePill.classList.add('heartPulse');
-    setTimeout(() => likePill.classList.remove('heartPulse'), 300);
-  }
+
+  likePill.className = 'stat-pill like-pill';
+  likePill.style.opacity = isLiked ? '1' : '0.6';
+  likePill.innerHTML = `<strong>${likeCount}</strong><span>공감</span>`;
 }
 
 // 댓글 수 업데이트 UI
@@ -130,12 +124,13 @@ function createCommentItem(comment) {
   el.innerHTML = `
     <div class="comment-head">
       <div class="comment-meta">
-        <span class="avatar" style="width:22px; height:22px; ${avatarStyle}"></span> 
-        ${user.nickname || '익명'} · ${when}
+        <span class="avatar" style="width:22px; height:22px; ${avatarStyle}"></span>
+        <span style="margin: 0 8px;">${user.nickname || '익명'}</span>
+        <span style="color: #B8B8B8;">${when}</span>
       </div>
       <div class="inline-actions">
-        <button class="btn outline edit-comment-btn" style="width:auto">수정</button>
-        <button class="btn outline danger delete-comment-btn" style="width:auto">삭제</button>
+        <button class="btn outline edit-comment-btn" style="width:auto; padding: 8px 16px; font-size: 0.85rem;">수정</button>
+        <button class="btn outline danger delete-comment-btn" style="width:auto; padding: 8px 16px; font-size: 0.85rem;">삭제</button>
       </div>
     </div>
     <div class="comment-content">${comment.content ?? ''}</div>
@@ -370,14 +365,14 @@ async function loadMoreComments() {
     const statsEl = qs('.stats');
     if (statsEl) {
       statsEl.innerHTML = `
-        <div class="stat-pill like-pill${isLiked ? ' liked' : ''}" style="cursor:pointer; background-color:${isLiked ? '#FEE500' : '#f8f8f8'};">
-          <span class="like-icon">❤️</span><strong>${likeCount}</strong><span>좋아요수</span>
+        <div class="stat-pill like-pill" style="cursor:pointer; opacity:${isLiked ? '1' : '0.6'};">
+          <strong>${likeCount}</strong><span>공감</span>
         </div>
-        <div class="stat-pill"><strong>${views}</strong><span>조회수</span></div>
-        <div class="stat-pill"><strong>${comments}</strong><span>댓글</span></div>
+        <div class="stat-pill"><strong>${views}</strong><span>읽음</span></div>
+        <div class="stat-pill"><strong>${comments}</strong><span>이야기</span></div>
       `;
-      
-      // 좋아요 클릭 이벤트
+
+      // 공감 클릭 이벤트
       const likePill = statsEl.querySelector('.like-pill');
       likePill?.addEventListener('click', () => toggleLike());
     }

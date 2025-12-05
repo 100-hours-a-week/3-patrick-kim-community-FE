@@ -3,44 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>게시글 상세 - 아무 말 대잔치</title>
+  <title>산문 읽기 - Sanmoon</title>
   <link rel="stylesheet" href="/component/style.css">
 </head>
-<body>
+<body class="sanmoon-bg">
   <div id="header"></div>
 
-  <main class="container">
-    <article class="card">
-      <header style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
+  <main class="sanmoon-container">
+    <article style="border: none; padding: 0;">
+      <header style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 40px;">
+        <div style="flex: 1;">
           <h2 class="post-title"></h2>
           <div class="meta">
             <span class="author"><span class="avatar"></span></span>
             <span>2021-01-01 00:00:00</span>
           </div>
         </div>
-        <div class="inline-actions">
-          <a class="btn outline" style="width:auto" href="/pages/post-edit.html">수정</a>
-          <button class="btn outline danger" style="width:auto">삭제</button>
+        <div class="inline-actions" style="margin-top: 4px;">
+          <a class="btn outline" style="width:auto; padding: 10px 20px; font-size: 0.9rem;" href="/pages/post-edit.html">수정</a>
+          <button class="btn outline danger" style="width:auto; padding: 10px 20px; font-size: 0.9rem;">삭제</button>
         </div>
       </header>
 
       <div class="image-box"></div>
       <div class="post-body">
-        
+
       </div>
 
       <div class="stats">
-        <div class="stat-pill"><strong></strong><span>좋아요수</span></div>
-        <div class="stat-pill"><strong></strong><span>조회수</span></div>
+        <div class="stat-pill"><strong></strong><span>좋아요</span></div>
+        <div class="stat-pill"><strong></strong><span>조회</span></div>
         <div class="stat-pill"><strong></strong><span>댓글</span></div>
       </div>
 
       <section class="comment-editor">
-        <textarea class="textarea" placeholder="댓글을 남겨주세요! (최대 255자)" maxlength="255"></textarea>
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span class="char-count" style="color:#999; font-size:13px;">0 / 255</span>
-          <button class="btn" style="max-width:140px;">댓글 등록</button>
+        <textarea class="textarea" placeholder="이 글에 대한 당신의 생각을 나눠주세요..." maxlength="255"></textarea>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 16px;">
+          <span class="char-count" style="color:#787878; font-size: 0.85rem; font-weight: 300;">0 / 255</span>
+          <button class="btn" style="max-width: 160px; padding: 12px 24px;">댓글 남기기</button>
         </div>
       </section>
     </article>
@@ -50,9 +50,9 @@
     </section>
 
     <!-- 댓글 더보기 버튼 & 스피너 -->
-    <div style="text-align:center; margin:20px 0;">
-      <button id="load-more-comments-btn" class="btn outline" style="max-width:200px; display:none;">댓글 더보기</button>
-      <div id="load-more-comments-spinner" style="display:none; margin-top:8px; color:#666;">로딩 중...</div>
+    <div style="text-align:center; margin: 48px 0;">
+      <button id="load-more-comments-btn" class="btn outline" style="max-width: 220px; display:none;">댓글 더 보기</button>
+      <div id="load-more-comments-spinner" style="display:none; margin-top: 16px; color: #787878; font-weight: 300;">불러오는 중...</div>
     </div>
   </main>
 

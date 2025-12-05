@@ -3,32 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>아무 말 대잔치 - 로그인</title>
+  <title>산문집 Sanmoon - 로그인</title>
   <link rel="stylesheet" href="/component/style.css" />
 </head>
-<body>
-  <header>
-    <h1>아무 말 대잔치</h1>
-  </header>
+<body class="sanmoon-bg">
+  <main class="container" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+    <div style="text-align: center; margin-bottom: 64px;">
+      <h1 style="font-size: 2.5rem; font-weight: 500; color: #2C2C2C; letter-spacing: -0.02em; margin-bottom: 16px;">산문집 <span style="font-size: 1.3rem; font-weight: 300; color: #4A635D; letter-spacing: 0.02em;">Sanmoon</span></h1>
+      <p style="font-size: 1rem; color: #787878; font-weight: 300; letter-spacing: 0.01em;">특별한 날에만 쓰는, 나만의 인생 산문집</p>
+    </div>
 
-  <main class="container">
-    <h2 class="center">로그인</h2>
-    <form class="card form-box" id="login-form">
+    <form class="form-box" id="login-form" style="border: none;">
       <div class="form-group">
         <label for="email">이메일</label>
-        <input type="email" id="email" placeholder="이메일을 입력하세요" required />
+        <input type="email" id="email" placeholder="이메일을 입력해주세요" required />
       </div>
 
       <div class="form-group">
         <label for="password">비밀번호</label>
-        <input type="password" id="password" placeholder="비밀번호를 입력하세요" required />
+        <input type="password" id="password" placeholder="비밀번호를 입력해주세요" required />
       </div>
 
       <button type="submit" class="btn">로그인</button>
     </form>
 
     <div class="link-box">
-      <a href="signup.html">회원가입</a>
+      <a href="signup.html">아직 계정이 없으신가요?</a>
     </div>
   </main>
   <!-- 모듈 스크립트 로딩 -->

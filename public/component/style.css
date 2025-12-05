@@ -233,7 +233,7 @@ header h1, .header h1, .app-header h1 {
    폼 스타일
    =========================== */
 .form-box, .form {
-  max-width: 520px;
+  max-width: 640px;
   margin: 40px auto;
 }
 
@@ -252,7 +252,7 @@ header h1, .header h1, .app-header h1 {
 
 .form-group input, .input {
   width: 100%;
-  padding: 16px 20px;
+  padding: 16px 16px;
   border: none;
   border-bottom: 1.5px solid rgba(120, 120, 120, 0.25);
   border-radius: 0;

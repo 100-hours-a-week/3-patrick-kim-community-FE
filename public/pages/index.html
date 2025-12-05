@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="/component/style.css" />
 </head>
 <body class="sanmoon-bg">
-  <main class="container" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
-    <div style="text-align: center; margin-bottom: 72px;">
+  <main class="container" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 24px;">
+    <div style="text-align: center; margin-bottom: 72px; width: 100%; max-width: 560px;">
       <h1 style="font-size: 2.8rem; font-weight: 400; color: #2C2C2C; letter-spacing: -0.03em; margin-bottom: 24px;">LEAFIQ</h1>
       <p style="font-size: 1.25rem; color: #2C2C2C; font-weight: 300; letter-spacing: 0.01em; margin-bottom: 16px; line-height: 1.8;">
         매일 쓰지 않아도 괜찮습니다
@@ -19,10 +19,10 @@
       </p>
     </div>
 
-    <form class="form-box" id="login-form" style="border: none; max-width: 440px;">
+    <form class="form-box" id="login-form" style="border: none; width: 100%; max-width: 320px;">
       <div class="form-group">
         <label for="email">이메일</label>
-        <input type="email" id="email" placeholder="당신의 서랍을 열어드릴까요?" required />
+        <input type="email" id="email" placeholder="이메일" required />
       </div>
 
       <div class="form-group">
@@ -33,7 +33,7 @@
       <button type="submit" class="btn">입장하기</button>
     </form>
 
-    <div class="link-box">
+    <div class="link-box" style="width: 100%; max-width: 560px; text-align: center;">
       <a href="signup.html">첫 페이지 만들기</a>
     </div>
   </main>

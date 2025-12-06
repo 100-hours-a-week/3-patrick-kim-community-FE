@@ -3,6 +3,9 @@
 // ===========================
 
 import { loadHeader, loadFooter } from '/component/layout.js';
+import { requireAuth } from '/lib/auth.js';
+
+requireAuth(); // 인증 체크
 
 // 날짜 포맷팅
 function formatCurrentDate() {

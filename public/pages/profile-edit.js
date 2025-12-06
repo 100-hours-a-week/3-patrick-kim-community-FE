@@ -4,7 +4,7 @@ import { isValidNickname } from '/lib/validators.js';
 import { loadHeader, loadFooter } from '/component/layout.js';
 import { showSuccess, showError } from '/lib/toast.js';
 
-await loadHeader();
+await loadHeader(true, '/pages/home.html'); // 뒤로가기 버튼으로 홈으로 이동
 await loadFooter();
 
 let currentImageUrl = '';

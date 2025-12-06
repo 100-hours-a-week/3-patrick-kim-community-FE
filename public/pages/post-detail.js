@@ -28,6 +28,33 @@ function setText(el, text) {
   if (el) el.textContent = text ?? '';
 }
 
+// 이미지 토글 함수 (전역으로 선언)
+window.toggleImage = function() {
+  const container = qs('#image-container');
+  const icon = qs('#image-toggle-icon');
+  const header = qs('.image-toggle-header span:first-child');
+
+  if (container && icon) {
+    const isOpen = container.style.display === 'block';
+
+    if (isOpen) {
+      // 접기
+      container.style.display = 'none';
+      icon.style.transform = 'rotate(0deg)';
+      if (header) {
+        header.textContent = '사진첩 펼쳐보기';
+      }
+    } else {
+      // 펼치기
+      container.style.display = 'block';
+      icon.style.transform = 'rotate(180deg)';
+      if (header) {
+        header.textContent = '사진첩 접기';
+      }
+    }
+  }
+}
+
 async function toggleLike() {
   if (!currentPostId) return;
   
@@ -346,13 +373,19 @@ async function loadMoreComments() {
       `;
     }
 
-    // 이미지
+    // 이미지 (이미지가 있을 때만 섹션 표시)
+    const imageSection = qs('#image-section');
     const imageBox = qs('.image-box');
     if (imageBox) {
       if (postImageUrl) {
-        imageBox.innerHTML = `<img src="${postImageUrl}" alt="post image" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" />`;
+        imageBox.innerHTML = `<img src="${postImageUrl}" alt="사진첩" style="width:100%; max-height: 600px; object-fit: contain; border-radius: 2px; box-shadow: 0 4px 12px rgba(44, 44, 44, 0.1);" />`;
+        if (imageSection) {
+          imageSection.style.display = 'block';
+        }
       } else {
-        imageBox.textContent = '이미지가 없습니다';
+        if (imageSection) {
+          imageSection.style.display = 'none';
+        }
       }
     }
 

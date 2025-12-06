@@ -25,7 +25,30 @@
         </div>
       </header>
 
-      <div class="image-box"></div>
+      <!-- 이미지 토글 영역 -->
+      <div id="image-section" style="display: none;">
+        <div class="image-toggle-header" onclick="toggleImage()" style="cursor: pointer; padding: 20px 0; border-top: 1px solid rgba(120, 120, 120, 0.12); border-bottom: 1px solid rgba(120, 120, 120, 0.12); margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(74, 99, 93, 0.03)'; this.style.paddingLeft='12px';" onmouseout="this.style.backgroundColor='transparent'; this.style.paddingLeft='0';">
+          <span style="font-size: 0.95rem; color: #4A635D; font-weight: 400; letter-spacing: 0.01em;">사진첩 펼쳐보기</span>
+          <span id="image-toggle-icon" style="font-size: 1.2rem; color: #4A635D; transition: transform 0.3s ease;">▼</span>
+        </div>
+        <div id="image-container" style="display: none; margin-bottom: 40px; overflow: hidden; animation: slideDown 0.4s ease;">
+          <div class="image-box" style="max-height: none;"></div>
+        </div>
+      </div>
+
+      <style>
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      </style>
+
       <div class="post-body">
 
       </div>

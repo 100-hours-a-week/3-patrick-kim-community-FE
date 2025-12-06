@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LEAFIQ - 나의 서재</title>
+  <link rel="stylesheet" href="/component/style.css" />
+  <style>
+    /* 홈 페이지 전용 스타일 */
+    .home-page {
+      background: linear-gradient(to bottom, #F9F8F4 0%, #F5F4EE 100%);
+      min-height: 100vh;
+    }
+
+    .home-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 80px 40px 100px 40px;
+    }
+
+    /* 환영 메시지 */
+    .home-welcome {
+      text-align: center;
+      margin-bottom: 80px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(120, 120, 120, 0.12);
+    }
+
+    .home-welcome-title {
+      font-size: 2.4rem;
+      font-weight: 400;
+      color: #2C2C2C;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+    }
+
+    .home-welcome-subtitle {
+      font-size: 1.1rem;
+      color: #787878;
+      font-weight: 300;
+      line-height: 1.9;
+    }
+
+    .home-welcome-date {
+      font-size: 0.9rem;
+      color: #B8B8B8;
+      font-weight: 300;
+      margin-top: 16px;
+      letter-spacing: 0.05em;
+    }
+
+    /* 책장 섹션 */
+    .bookshelf {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+
+    /* 책 카드 */
+    .book-card {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(120, 120, 120, 0.15);
+      padding: 64px 48px;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .book-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      background: linear-gradient(to bottom, rgba(74, 99, 93, 0.05), transparent);
+      transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .book-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 16px 48px rgba(44, 44, 44, 0.15);
+      background: rgba(255, 255, 255, 0.9);
+      border-color: #4A635D;
+    }
+
+    .book-card:hover::before {
+      height: 100%;
+    }
+
+    .book-card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .book-card-icon {
+      font-size: 3.5rem;
+      margin-bottom: 32px;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .book-card:hover .book-card-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .book-card-title {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: #2C2C2C;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+    }
+
+    .book-card-subtitle {
+      font-size: 1rem;
+      color: #4A635D;
+      font-weight: 400;
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+    }
+
+    .book-card-description {
+      font-size: 0.95rem;
+      color: #787878;
+      font-weight: 300;
+      line-height: 1.9;
+      margin-bottom: 32px;
+    }
+
+    .book-card-footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid rgba(120, 120, 120, 0.1);
+    }
+
+    .book-card-stats {
+      font-size: 0.85rem;
+      color: #B8B8B8;
+      font-weight: 300;
+    }
+
+    .book-card-arrow {
+      font-size: 1.5rem;
+      color: #4A635D;
+      transition: transform 0.3s ease;
+    }
+
+    .book-card:hover .book-card-arrow {
+      transform: translateX(8px);
+    }
+
+    /* 개별 카드 색상 */
+    .book-card.memoir {
+      border-left: 4px solid rgba(194, 153, 107, 0.4);
+    }
+
+    .book-card.memoir:hover {
+      border-left-color: #C2996B;
+    }
+
+    .book-card.shared {
+      border-left: 4px solid rgba(74, 99, 93, 0.4);
+    }
+
+    .book-card.shared:hover {
+      border-left-color: #4A635D;
+    }
+
+    /* 하단 액션 */
+    .home-actions {
+      text-align: center;
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid rgba(120, 120, 120, 0.12);
+    }
+
+    .home-action-text {
+      font-size: 1rem;
+      color: #787878;
+      font-weight: 300;
+      margin-bottom: 24px;
+      line-height: 1.8;
+    }
+
+    .home-action-btn {
+      display: inline-block;
+      padding: 16px 48px;
+      background-color: #4A635D;
+      color: #F9F8F4;
+      border: none;
+      border-radius: 2px;
+      font-size: 1rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .home-action-btn:hover {
+      background-color: #3d5249;
+      box-shadow: 0 4px 16px rgba(74, 99, 93, 0.25);
+      transform: translateY(-2px);
+    }
+
+    /* 반응형 */
+    @media (max-width: 968px) {
+      .bookshelf {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .home-container {
+        padding: 60px 24px 80px 24px;
+      }
+
+      .home-welcome {
+        margin-bottom: 60px;
+      }
+
+      .home-welcome-title {
+        font-size: 2rem;
+      }
+
+      .book-card {
+        padding: 48px 32px;
+        min-height: 360px;
+      }
+
+      .book-card-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .home-welcome-title {
+        font-size: 1.6rem;
+      }
+
+      .book-card {
+        padding: 40px 24px;
+        min-height: 320px;
+      }
+
+      .book-card-icon {
+        font-size: 2.8rem;
+      }
+
+      .book-card-title {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body class="sanmoon-bg home-page">
+  <div id="header"></div>
+
+  <main class="home-container">
+    <!-- 환영 메시지 -->
+    <section class="home-welcome">
+      <h1 class="home-welcome-title">나의 서재</h1>
+      <p class="home-welcome-subtitle">
+        오늘은 어떤 책을 펼쳐볼까요?
+      </p>
+      <p class="home-welcome-date" id="welcome-date"></p>
+    </section>
+
+    <!-- 책장 -->
+    <section class="bookshelf">
+      <!-- 나의 특별한 순간들 -->
+      <article class="book-card memoir" onclick="window.location.href='/pages/my-memoir.html'">
+        <div class="book-card-content">
+          <h2 class="book-card-title">나의 특별한 순간</h2>
+          <p class="book-card-subtitle">My Precious Moments</p>
+          <p class="book-card-description">
+            시간이 지나도 빛바래지 않을<br/>
+            나만의 소중한 기억들.<br/>
+            오직 나를 위한 산문집입니다.
+          </p>
+        </div>
+        <div class="book-card-footer">
+          <span class="book-card-stats" id="memoir-count">0개의 추억</span>
+          <span class="book-card-arrow">→</span>
+        </div>
+      </article>
+
+      <!-- 함께 나눈 이야기들 -->
+      <article class="book-card shared" onclick="window.location.href='/pages/post-list.html'">
+        <div class="book-card-content">
+          <h2 class="book-card-title">함께 나눈 이야기</h2>
+          <p class="book-card-subtitle">Shared Stories</p>
+          <p class="book-card-description">
+            다른 사람들과 나누고 싶은<br/>
+            순간들의 모음.<br/>
+            함께 읽고 공감하는 공간입니다.
+          </p>
+        </div>
+        <div class="book-card-footer">
+          <span class="book-card-stats" id="shared-count">0개의 이야기</span>
+          <span class="book-card-arrow">→</span>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script type="module" src="/pages/home.js"></script>
+</body>
+</html>

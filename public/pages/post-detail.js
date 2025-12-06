@@ -101,10 +101,10 @@ async function handleDelete() {
         window.location.href = '/pages/post-list.html';
       }, 800);
     } else {
-      throw new Error(result?.message || '게시글 삭제 실패');
+      throw new Error(result?.message || '페이지를 지우지 못했습니다');
     }
   } catch (e) {
-    console.error('게시글 삭제 실패:', e);
+    console.error('페이지 삭제 실패:', e);
     showError(`삭제에 실패했습니다: ${e.message || e}`);
   }
 }

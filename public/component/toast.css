@@ -1,4 +1,4 @@
-/* Toast 알림 스타일 */
+/* Toast 알림 스타일 - LEAFIQ 컨셉 */
 .toast-container {
   position: fixed;
   top: 80px;
@@ -6,46 +6,56 @@
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   pointer-events: none;
 }
 
 .toast {
-  background: #333;
-  color: #fff;
-  padding: 16px 24px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: rgba(44, 44, 44, 0.95);
+  backdrop-filter: blur(10px);
+  color: #F9F8F4;
+  padding: 20px 28px;
+  border-radius: 2px;
+  border-left: 3px solid #4A635D;
+  box-shadow: 0 8px 24px rgba(44, 44, 44, 0.2);
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 300px;
-  max-width: 400px;
+  gap: 14px;
+  min-width: 320px;
+  max-width: 420px;
   pointer-events: auto;
-  animation: slideIn 0.3s ease;
-  font-size: 14px;
-  line-height: 1.5;
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 300;
+  letter-spacing: 0.01em;
 }
 
 .toast.success {
-  background: #10b981;
+  background: rgba(74, 99, 93, 0.95);
+  border-left-color: #4A635D;
 }
 
 .toast.error {
-  background: #ef4444;
+  background: rgba(194, 91, 91, 0.95);
+  border-left-color: #C25B5B;
 }
 
 .toast.warning {
-  background: #f59e0b;
+  background: rgba(194, 153, 107, 0.95);
+  border-left-color: #C2996B;
 }
 
 .toast.info {
-  background: #3b82f6;
+  background: rgba(74, 99, 93, 0.9);
+  border-left-color: #4A635D;
 }
 
 .toast-icon {
-  font-size: 20px;
+  font-size: 1.2rem;
   flex-shrink: 0;
+  opacity: 0.9;
 }
 
 .toast-message {
@@ -55,26 +65,28 @@
 .toast-close {
   background: none;
   border: none;
-  color: #fff;
-  font-size: 20px;
+  color: #F9F8F4;
+  font-size: 1.2rem;
   cursor: pointer;
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.7;
-  transition: opacity 0.2s;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  border-radius: 50%;
 }
 
 .toast-close:hover {
   opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 @keyframes slideIn {
   from {
-    transform: translateX(400px);
+    transform: translateX(420px);
     opacity: 0;
   }
   to {
@@ -89,7 +101,7 @@
     opacity: 1;
   }
   to {
-    transform: translateX(400px);
+    transform: translateX(420px);
     opacity: 0;
   }
 }

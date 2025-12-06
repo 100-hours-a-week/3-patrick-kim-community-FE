@@ -26,7 +26,7 @@ async function loadPostData() {
   currentPostId = postId;
 
   if (!postId) {
-    showError('잘못된 접근입니다. 게시글 ID가 없습니다.');
+    showError('잘못된 접근입니다');
     setTimeout(() => {
       window.location.href = '/pages/post-list.html';
     }, 1000);
@@ -35,7 +35,7 @@ async function loadPostData() {
 
   try {
     const res = await getPostDetail(postId);
-    if (!res?.isSuccess) throw new Error(res?.message || '상세 조회 실패');
+    if (!res?.isSuccess) throw new Error(res?.message || '페이지를 불러올 수 없습니다');
 
     const data = res.data || {};
     const { title, content, postImageId } = data;
@@ -46,7 +46,7 @@ async function loadPostData() {
 
     if (titleInput) titleInput.value = title || '';
     if (contentInput) contentInput.value = content || '';
-    
+
     currentImageId = postImageId;
 
     // 헤더 뒤로가기 링크에 postId 추가
@@ -55,20 +55,20 @@ async function loadPostData() {
       backBtn.setAttribute('href', `/pages/post-detail.html?postId=${postId}`);
     }
   } catch (e) {
-    console.error('게시글 로드 실패:', e);
-    showError(`게시글 로드 실패: ${e.message || e}`);
+    console.error('페이지 로드 실패:', e);
+    showError(`페이지를 불러올 수 없습니다: ${e.message || e}`);
     setTimeout(() => {
       window.location.href = '/pages/post-list.html';
     }, 1000);
   }
 }
 
-// 게시글 수정
+// 이야기 수정
 async function handleUpdate(e) {
   e.preventDefault();
 
   if (!currentPostId) {
-    showError('게시글 ID가 없습니다.');
+    showError('잘못된 접근입니다');
     return;
   }
 
@@ -79,22 +79,22 @@ async function handleUpdate(e) {
 
   // 유효성 검사
   if (!title) {
-    showWarning('제목을 입력해주세요.');
+    showWarning('제목을 입력해주세요');
     titleInput?.focus();
     return;
   }
   if (title.length > 26) {
-    showError('제목은 최대 26자까지 입력 가능합니다.');
+    showError('제목은 최대 26자까지 입력 가능합니다');
     titleInput?.focus();
     return;
   }
   if (!content) {
-    showWarning('내용을 입력해주세요.');
+    showWarning('내용을 입력해주세요');
     contentInput?.focus();
     return;
   }
   if (content.length > 255) {
-    showError('내용은 최대 255자까지 입력 가능합니다.');
+    showError('내용은 최대 255자까지 입력 가능합니다');
     contentInput?.focus();
     return;
   }
@@ -116,7 +116,7 @@ async function handleUpdate(e) {
       console.log('이미지 업로드 성공:', postImageId);
     }
 
-    // 게시글 수정 API 호출
+    // 이야기 수정 API 호출
     const res = await updatePost(currentPostId, {
       title,
       content,
@@ -124,16 +124,16 @@ async function handleUpdate(e) {
     });
 
     if (res?.isSuccess) {
-      showSuccess('게시글이 수정되었습니다.');
+      showSuccess('페이지가 수정되었습니다');
       setTimeout(() => {
         window.location.href = `/pages/post-detail.html?postId=${currentPostId}`;
-      }, 500);
+      }, 800);
     } else {
-      throw new Error(res?.message || '게시글 수정 실패');
+      throw new Error(res?.message || '페이지를 수정하지 못했습니다');
     }
   } catch (e) {
-    console.error('게시글 수정 실패:', e);
-    showError(`게시글 수정 실패: ${e.message || e}`);
+    console.error('페이지 수정 실패:', e);
+    showError(`페이지를 수정하지 못했습니다: ${e.message || e}`);
   } finally {
     const submitBtn = qs('.btn[type="submit"]');
     if (submitBtn) {

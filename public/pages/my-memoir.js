@@ -2,25 +2,7 @@
 // 나의 산문집 - 개인 추억 페이지
 // ===========================
 
-// 헤더/푸터 로드
-async function loadComponents() {
-  try {
-    const headerRes = await fetch('/component/header-with-back.html');
-    const headerHtml = await headerRes.text();
-    document.getElementById('header').innerHTML = headerHtml;
-
-    const footerRes = await fetch('/component/footer.html');
-    const footerHtml = await footerRes.text();
-    document.getElementById('footer').innerHTML = footerHtml;
-
-    // 헤더 초기화
-    if (window.initHeader) {
-      window.initHeader();
-    }
-  } catch (error) {
-    console.error('컴포넌트 로드 실패:', error);
-  }
-}
+import { loadHeader, loadFooter } from '/component/layout.js';
 
 // 날짜 포맷팅
 function formatDate(dateString) {
@@ -204,7 +186,8 @@ function setCurrentYear() {
 
 // 초기화
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadComponents();
+  await loadHeader(true, '/pages/home.html'); // 뒤로가기 버튼으로 홈으로 이동
+  await loadFooter();
   setCurrentYear();
   await loadMemoirs();
 });

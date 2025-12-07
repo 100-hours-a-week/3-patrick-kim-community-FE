@@ -1,5 +1,7 @@
 // 드롭다운 메뉴 토글 기능 (ESM)
 import { logout } from '/js-api/auth.js';
+import { showConfirmModal } from '/lib/modal.js';
+import { showToast } from '/lib/toast.js';
 
 export function initDropdown() {
   const dropdowns = document.querySelectorAll('.dropdown');
@@ -41,14 +43,26 @@ export function initDropdown() {
   logoutBtns.forEach(btn => {
     btn.addEventListener('click', async function(e) {
       e.preventDefault();
-      if (confirm('로그아웃 하시겠습니까?')) {
+
+      const confirmed = await showConfirmModal(
+        '잠시 책을 덮으시겠습니까?',
+        '언제든 마음이 일렁일 때 다시 찾아와주세요',
+        {
+          confirmText: '책 덮기',
+          cancelText: '머물기'
+        }
+      );
+
+      if (confirmed) {
         try {
           await logout();
-          alert('로그아웃 되었습니다.');
-          window.location.href = '/pages/index.html';
+          showToast('조용히 책을 덮었습니다');
+          setTimeout(() => {
+            window.location.href = '/pages/index.html';
+          }, 800);
         } catch (error) {
           console.log('로그아웃 실패:', error);
-          alert('로그아웃에 실패했습니다. 다시 시도해주세요.');
+          showToast('책을 덮는 데 실패했습니다. 다시 시도해주세요', 'error');
         }
       }
     });

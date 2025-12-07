@@ -28,6 +28,33 @@ function setText(el, text) {
   if (el) el.textContent = text ?? '';
 }
 
+// 이미지 토글 함수 (전역으로 선언)
+window.toggleImage = function() {
+  const container = qs('#image-container');
+  const icon = qs('#image-toggle-icon');
+  const header = qs('.image-toggle-header span:first-child');
+
+  if (container && icon) {
+    const isOpen = container.style.display === 'block';
+
+    if (isOpen) {
+      // 접기
+      container.style.display = 'none';
+      icon.style.transform = 'rotate(0deg)';
+      if (header) {
+        header.textContent = '사진첩 펼쳐보기';
+      }
+    } else {
+      // 펼치기
+      container.style.display = 'block';
+      icon.style.transform = 'rotate(180deg)';
+      if (header) {
+        header.textContent = '사진첩 접기';
+      }
+    }
+  }
+}
+
 async function toggleLike() {
   if (!currentPostId) return;
   
@@ -54,19 +81,13 @@ async function toggleLike() {
 function updateLikeUI() {
   const statsEl = qs('.stats');
   if (!statsEl) return;
-  
+
   const likePill = statsEl.querySelector('.stat-pill.like-pill');
   if (!likePill) return;
-  
-  likePill.className = `stat-pill like-pill${isLiked ? ' liked' : ''}`;
-  likePill.style.backgroundColor = isLiked ? '#FEE500' : '#f8f8f8';
-  likePill.innerHTML = `<span class="like-icon">❤️</span><strong>${likeCount}</strong><span>좋아요수</span>`;
-  
-  // 애니메이션 효과
-  if (isLiked) {
-    likePill.classList.add('heartPulse');
-    setTimeout(() => likePill.classList.remove('heartPulse'), 300);
-  }
+
+  likePill.className = 'stat-pill like-pill';
+  likePill.style.opacity = isLiked ? '1' : '0.6';
+  likePill.innerHTML = `<strong>${likeCount}</strong><span>공감</span>`;
 }
 
 // 댓글 수 업데이트 UI
@@ -86,32 +107,32 @@ function updateCommentCountUI() {
 
 async function handleDelete() {
   if (!currentPostId) return;
-  
+
   const confirmed = await showConfirmModal(
-    '게시글 삭제',
-    '정말 삭제하시겠습니까?',
+    '이 페이지를 찢어내시겠습니까?',
+    '한 번 사라진 기억은 다시 되돌릴 수 없습니다',
     {
       isDanger: true,
-      confirmText: '삭제',
-      cancelText: '취소'
+      confirmText: '찢어내기',
+      cancelText: '보관하기'
     }
   );
-  
+
   if (!confirmed) return;
-  
+
   try {
     const result = await deletePost(currentPostId);
     if (result?.isSuccess) {
-      showSuccess('게시글이 삭제되었습니다.');
+      showSuccess('페이지가 조용히 사라졌습니다');
       setTimeout(() => {
         window.location.href = '/pages/post-list.html';
-      }, 500);
+      }, 800);
     } else {
-      throw new Error(result?.message || '게시글 삭제 실패');
+      throw new Error(result?.message || '페이지를 지우지 못했습니다');
     }
   } catch (e) {
-    console.error('게시글 삭제 실패:', e);
-    showError(`게시글 삭제 실패: ${e.message || e}`);
+    console.error('페이지 삭제 실패:', e);
+    showError(`삭제에 실패했습니다: ${e.message || e}`);
   }
 }
 
@@ -130,12 +151,13 @@ function createCommentItem(comment) {
   el.innerHTML = `
     <div class="comment-head">
       <div class="comment-meta">
-        <span class="avatar" style="width:22px; height:22px; ${avatarStyle}"></span> 
-        ${user.nickname || '익명'} · ${when}
+        <span class="avatar" style="width:22px; height:22px; ${avatarStyle}"></span>
+        <span style="margin: 0 8px;">${user.nickname || '익명'}</span>
+        <span style="color: #B8B8B8;">${when}</span>
       </div>
       <div class="inline-actions">
-        <button class="btn outline edit-comment-btn" style="width:auto">수정</button>
-        <button class="btn outline danger delete-comment-btn" style="width:auto">삭제</button>
+        <button class="btn outline edit-comment-btn" style="width:auto; padding: 8px 16px; font-size: 0.85rem;">수정</button>
+        <button class="btn outline danger delete-comment-btn" style="width:auto; padding: 8px 16px; font-size: 0.85rem;">삭제</button>
       </div>
     </div>
     <div class="comment-content">${comment.content ?? ''}</div>
@@ -156,16 +178,16 @@ function createCommentItem(comment) {
 async function handleCreateComment() {
   const textarea = qs('.comment-editor textarea');
   const content = textarea?.value?.trim();
-  
+
   if (!content) {
-    showWarning('댓글 내용을 입력해주세요.');
+    showWarning('이야기 내용을 입력해주세요');
     textarea?.focus();
     return;
   }
-  
+
   // 댓글 길이 검증 (최대 255자)
   if (content.length > 255) {
-    showWarning('댓글은 최대 255자까지 입력 가능합니다.');
+    showWarning('이야기는 최대 255자까지 입력 가능합니다');
     textarea?.focus();
     return;
   }
@@ -178,7 +200,7 @@ async function handleCreateComment() {
   try {
     const result = await createComment(currentPostId, content);
     if (result?.isSuccess) {
-      showSuccess('댓글이 작성되었습니다.');
+      showSuccess('이야기를 남겼습니다');
       // 댓글 수 증가
       commentCount++;
       updateCommentCountUI();
@@ -195,7 +217,7 @@ async function handleCreateComment() {
     }
   } catch (e) {
     console.error('댓글 작성 실패:', e);
-    showError(`댓글 작성 실패: ${e.message || e}`);
+    showError(`이야기를 남기는 데 실패했습니다: ${e.message || e}`);
   }
 }
 
@@ -204,28 +226,28 @@ async function handleEditComment(commentId, commentEl) {
   const contentEl = commentEl.querySelector('.comment-content');
   const currentContent = contentEl?.textContent || '';
   
-  const newContent = await showInputModal('댓글 수정', currentContent, {
-    placeholder: '댓글 내용을 입력하세요 (최대 255자)',
-    confirmText: '수정',
-    cancelText: '취소'
+  const newContent = await showInputModal('이야기 다시 쓰기', currentContent, {
+    placeholder: '조용히 공감을 전하거나, 비슷한 마음을 나눠주세요',
+    confirmText: '다시 쓰기',
+    cancelText: '그대로 두기'
   });
   
   if (newContent === null) return; // 취소
   if (!newContent.trim()) {
-    showWarning('댓글 내용을 입력해주세요.');
+    showWarning('이야기 내용을 입력해주세요');
     return;
   }
-  
+
   // 댓글 길이 검증 (최대 255자)
   if (newContent.trim().length > 255) {
-    showWarning('댓글은 최대 255자까지 입력 가능합니다.');
+    showWarning('이야기는 최대 255자까지 입력 가능합니다');
     return;
   }
   
   try {
     const result = await updateComment(commentId, newContent.trim());
     if (result?.isSuccess) {
-      showSuccess('댓글이 수정되었습니다.');
+      showSuccess('이야기를 다시 썼습니다');
       // 댓글 내용만 업데이트
       if (contentEl) contentEl.textContent = newContent.trim();
     } else {
@@ -233,28 +255,28 @@ async function handleEditComment(commentId, commentEl) {
     }
   } catch (e) {
     console.error('댓글 수정 실패:', e);
-    showError(`댓글 수정 실패: ${e.message || e}`);
+    showError(`수정에 실패했습니다: ${e.message || e}`);
   }
 }
 
 // 댓글 삭제
 async function handleDeleteComment(commentId, commentEl) {
   const confirmed = await showConfirmModal(
-    '댓글 삭제',
-    '정말 삭제하시겠습니까?',
+    '이야기를 지우시겠습니까?',
+    '한 번 지운 이야기는 되돌릴 수 없습니다',
     {
       isDanger: true,
-      confirmText: '삭제',
-      cancelText: '취소'
+      confirmText: '지우기',
+      cancelText: '남기기'
     }
   );
-  
+
   if (!confirmed) return;
-  
+
   try {
     const result = await deleteComment(commentId);
     if (result?.isSuccess) {
-      showSuccess('댓글이 삭제되었습니다.');
+      showSuccess('이야기가 조용히 사라졌습니다');
       // 댓글 수 감소
       commentCount--;
       updateCommentCountUI();
@@ -265,7 +287,7 @@ async function handleDeleteComment(commentId, commentEl) {
     }
   } catch (e) {
     console.error('댓글 삭제 실패:', e);
-    showError(`댓글 삭제 실패: ${e.message || e}`);
+    showError(`삭제에 실패했습니다: ${e.message || e}`);
   }
 }
 
@@ -351,13 +373,19 @@ async function loadMoreComments() {
       `;
     }
 
-    // 이미지
+    // 이미지 (이미지가 있을 때만 섹션 표시)
+    const imageSection = qs('#image-section');
     const imageBox = qs('.image-box');
     if (imageBox) {
       if (postImageUrl) {
-        imageBox.innerHTML = `<img src="${postImageUrl}" alt="post image" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" />`;
+        imageBox.innerHTML = `<img src="${postImageUrl}" alt="사진첩" style="width:100%; max-height: 600px; object-fit: contain; border-radius: 2px; box-shadow: 0 4px 12px rgba(44, 44, 44, 0.1);" />`;
+        if (imageSection) {
+          imageSection.style.display = 'block';
+        }
       } else {
-        imageBox.textContent = '이미지가 없습니다';
+        if (imageSection) {
+          imageSection.style.display = 'none';
+        }
       }
     }
 
@@ -370,14 +398,14 @@ async function loadMoreComments() {
     const statsEl = qs('.stats');
     if (statsEl) {
       statsEl.innerHTML = `
-        <div class="stat-pill like-pill${isLiked ? ' liked' : ''}" style="cursor:pointer; background-color:${isLiked ? '#FEE500' : '#f8f8f8'};">
-          <span class="like-icon">❤️</span><strong>${likeCount}</strong><span>좋아요수</span>
+        <div class="stat-pill like-pill" style="cursor:pointer; opacity:${isLiked ? '1' : '0.6'};">
+          <strong>${likeCount}</strong><span>공감</span>
         </div>
-        <div class="stat-pill"><strong>${views}</strong><span>조회수</span></div>
-        <div class="stat-pill"><strong>${comments}</strong><span>댓글</span></div>
+        <div class="stat-pill"><strong>${views}</strong><span>읽음</span></div>
+        <div class="stat-pill"><strong>${comments}</strong><span>이야기</span></div>
       `;
-      
-      // 좋아요 클릭 이벤트
+
+      // 공감 클릭 이벤트
       const likePill = statsEl.querySelector('.like-pill');
       likePill?.addEventListener('click', () => toggleLike());
     }

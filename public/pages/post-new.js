@@ -45,11 +45,11 @@ document.querySelector('form')?.addEventListener('submit', async (e) => {
       console.log('이미지 업로드 성공:', postImageId);
     }
 
-    // 게시글 작성 API 호출
+    // 이야기 작성 API 호출
     const result = await createPost({ title, content, postImageId });
-    if (!result?.isSuccess) throw new Error(result?.message || '게시글 작성 실패');
+    if (!result?.isSuccess) throw new Error(result?.message || '페이지를 남기지 못했습니다');
 
-    showSuccess('게시글이 작성되었습니다!');
+    showSuccess('소중한 순간이 기록되었습니다');
     // 작성 완료 후 목록 또는 상세로 이동
     const postId = result?.data?.postId;
     setTimeout(() => {
@@ -58,10 +58,10 @@ document.querySelector('form')?.addEventListener('submit', async (e) => {
       } else {
         window.location.href = '/pages/post-list.html';
       }
-    }, 500);
+    }, 800);
   } catch (error) {
-    console.error('게시글 작성 실패:', error);
-    showError(`게시글 작성 실패: ${error?.message || '다시 시도해주세요.'}`);
+    console.error('이야기 작성 실패:', error);
+    showError(`페이지를 남기지 못했습니다: ${error?.message || '다시 시도해주세요'}`);
   }
 });
 

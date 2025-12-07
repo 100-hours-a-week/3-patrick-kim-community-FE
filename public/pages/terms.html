@@ -3,16 +3,231 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>이용약관 - 아무 말 대잔치</title>
+  <title>이용약관 - LEAFIQ</title>
   <link rel="stylesheet" href="/component/style.css">
+  <style>
+    .terms-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 40px;
+      background: #fff;
+      font-family: 'Noto Serif KR', serif;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .terms-container h1 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #4A635D;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .meta {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+
+    .intro {
+      background: #F7F9F8;
+      padding: 24px;
+      border-left: 4px solid #4A635D;
+      margin-bottom: 40px;
+      font-size: 15px;
+    }
+
+    .toc {
+      background: #FAFBFA;
+      padding: 24px 32px;
+      margin-bottom: 40px;
+      border-radius: 8px;
+    }
+
+    .toc ol {
+      list-style: decimal;
+      padding-left: 20px;
+    }
+
+    .toc li {
+      margin: 8px 0;
+    }
+
+    .toc a {
+      color: #4A635D;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .toc a:hover {
+      color: #2C3A36;
+      text-decoration: underline;
+    }
+
+    .section {
+      margin: 48px 0;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #E5E7E6;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #2C3A36;
+      margin-bottom: 20px;
+    }
+
+    .section ul {
+      list-style: disc;
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .section li {
+      margin: 10px 0;
+    }
+  </style>
 </head>
 <body>
   <div id="header"></div>
-  <main class="container">
-    <h2 class="center">이용약관</h2>
-    <iframe id="terms-frame" src="http://localhost:8080/terms" style="width:100%;min-height:70vh;border:1px solid #eee;"></iframe>
+
+  <main class="terms-container">
+    <h1>커뮤니티 이용약관</h1>
+    <p class="meta">시행일: 2025.12.07</p>
+
+    <div class="intro">
+      본 약관은 <strong>LEAFIQ</strong>(이하 "회사")가 제공하는
+      <strong>LEAFIQ</strong> 커뮤니티(이하 "서비스") 이용과 관련하여
+      회사와 회원 간 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.
+    </div>
+
+    <nav class="toc" aria-label="목차">
+      <ol>
+        <li><a href="#1">제1조 (목적)</a></li>
+        <li><a href="#2">제2조 (용어의 정의)</a></li>
+        <li><a href="#3">제3조 (약관의 게시와 개정)</a></li>
+        <li><a href="#4">제4조 (계정 및 회원정보)</a></li>
+        <li><a href="#5">제5조 (서비스의 제공 및 변경)</a></li>
+        <li><a href="#6">제6조 (커뮤니티 이용규칙)</a></li>
+        <li><a href="#7">제7조 (콘텐츠의 권리와 책임)</a></li>
+        <li><a href="#8">제8조 (이용제한 및 해지)</a></li>
+        <li><a href="#9">제9조 (면책)</a></li>
+        <li><a href="#10">제10조 (분쟁의 해결 및 관할)</a></li>
+        <li><a href="#11">부칙</a></li>
+      </ol>
+    </nav>
+
+    <div id="1" class="section">
+      <h2>제1조 (목적)</h2>
+      <p>
+        본 약관은 <strong>LEAFIQ</strong>(이하 "회사")가 제공하는
+        <strong>LEAFIQ</strong> 커뮤니티(이하 "서비스") 이용과 관련하여
+        회사와 회원 간 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.
+      </p>
+    </div>
+
+    <div id="2" class="section">
+      <h2>제2조 (용어의 정의)</h2>
+      <ul>
+        <li><strong>"회원":</strong> 본 약관에 동의하고 서비스 이용계약을 체결한 자</li>
+        <li><strong>"게시물":</strong> 회원이 서비스 내에 게시한 글, 댓글, 이미지, 링크, 기타 정보 일체</li>
+        <li><strong>"운영정책":</strong> 약관을 구체화하기 위해 회사가 별도로 정한 세부 정책</li>
+      </ul>
+    </div>
+
+    <div id="3" class="section">
+      <h2>제3조 (약관의 게시와 개정)</h2>
+      <p>
+        회사는 본 약관을 서비스 초기화면 또는 연결화면에 게시합니다. 회사는 관련 법령을 위반하지 않는 범위에서
+        약관을 개정할 수 있으며, 개정 시 개정내용과 적용일자를 명시하여 최소 7일 전(회원에게 불리한 경우 30일 전) 공지합니다.
+      </p>
+    </div>
+
+    <div id="4" class="section">
+      <h2>제4조 (계정 및 회원정보)</h2>
+      <ul>
+        <li>회원은 계정 정보(닉네임, 이메일 등)를 최신으로 유지해야 합니다.</li>
+        <li>타인의 명의 도용, 중복가입, 허위정보 기재는 금지됩니다.</li>
+        <li>계정 보안은 회원의 책임이며, 제3자에게 양도하거나 대여할 수 없습니다.</li>
+      </ul>
+    </div>
+
+    <div id="5" class="section">
+      <h2>제5조 (서비스의 제공 및 변경)</h2>
+      <ul>
+        <li>회사는 게시판, 댓글, 알림 등 커뮤니티 기능을 제공합니다.</li>
+        <li>서비스의 내용 및 운영시간은 회사의 정책에 따라 변경될 수 있습니다.</li>
+        <li>정기점검, 설비 보수 등으로 서비스가 일시 중단될 수 있으며, 이 경우 사전에 공지합니다 (불가피한 경우 사후 공지).</li>
+      </ul>
+    </div>
+
+    <div id="6" class="section">
+      <h2>제6조 (커뮤니티 이용규칙)</h2>
+      <p>회원은 다음 각 호의 행위를 하여서는 안 됩니다:</p>
+      <ul>
+        <li>불법, 음란, 혐오, 차별, 폭력을 조장하는 등 관련 법령 및 공서양속에 반하는 게시물 작성</li>
+        <li>타인의 권리를 침해하는 행위 (저작권, 초상권, 개인정보 침해 포함)</li>
+        <li>광고, 스팸, 도배, 허위사실 유포</li>
+        <li>서비스의 안정적 운영을 방해하는 행위</li>
+        <li>운영진의 적정한 요청을 정당한 사유 없이 거부하는 행위</li>
+      </ul>
+    </div>
+
+    <div id="7" class="section">
+      <h2>제7조 (콘텐츠의 권리와 책임)</h2>
+      <p>
+        게시물의 저작권은 원칙적으로 회원에게 귀속됩니다. 다만 회사는 서비스 운영 및 홍보 목적 범위 내에서
+        게시물을 무상으로 비독점적으로 이용(저장, 복제, 전송, 공중송신, 전시)할 수 있습니다.
+      </p>
+      <p>
+        회원은 자신이 게시한 게시물에 대한 법적 책임을 부담합니다.
+      </p>
+    </div>
+
+    <div id="8" class="section">
+      <h2>제8조 (이용제한 및 해지)</h2>
+      <ul>
+        <li>회사는 약관 및 운영정책 위반 시 게시물 삭제, 이용정지, 계약 해지 등의 조치를 취할 수 있습니다.</li>
+        <li>회원은 언제든지 탈퇴를 요청할 수 있으며, 탈퇴 시 작성한 게시물은 삭제되지 않을 수 있습니다.</li>
+        <li>이용제한에 대해 이의가 있는 경우 고객센터를 통해 이의신청을 할 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <div id="9" class="section">
+      <h2>제9조 (면책)</h2>
+      <p>
+        회사는 천재지변, 불가항력, 회원의 귀책사유로 인한 손해에 대하여 책임을 지지 않습니다.
+      </p>
+      <p>
+        회사는 회원 상호 간 또는 회원과 제3자 간 분쟁에 개입하지 않으며, 이에 따른 손해를 배상하지 않습니다.
+      </p>
+      <p>
+        회사는 무료로 제공하는 서비스 이용과 관련하여 관련 법령에 특별한 규정이 없는 한 책임을 지지 않습니다.
+      </p>
+    </div>
+
+    <div id="10" class="section">
+      <h2>제10조 (분쟁의 해결 및 관할)</h2>
+      <p>
+        본 약관은 대한민국 법령에 따릅니다. 서비스 이용과 관련하여 회사와 회원 간 분쟁이 발생한 경우,
+        민사소송법상 관할법원을 합의 관할로 합니다.
+      </p>
+    </div>
+
+    <div id="11" class="section">
+      <h2>부칙</h2>
+      <p>본 약관은 2025년 12월 7일부터 시행합니다.</p>
+    </div>
   </main>
+
   <div id="footer"></div>
+
   <script type="module">
     import { loadHeader, loadFooter } from '/component/layout.js';
     loadHeader();

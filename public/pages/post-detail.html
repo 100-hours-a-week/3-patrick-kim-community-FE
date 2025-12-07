@@ -3,44 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>게시글 상세 - 아무 말 대잔치</title>
+  <title>Leafiq - 상세 정보</title>
   <link rel="stylesheet" href="/component/style.css">
 </head>
-<body>
+<body class="sanmoon-bg">
   <div id="header"></div>
 
-  <main class="container">
-    <article class="card">
-      <header style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
+  <main class="sanmoon-container">
+    <article style="border: none; padding: 0;">
+      <header style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 40px;">
+        <div style="flex: 1;">
           <h2 class="post-title"></h2>
           <div class="meta">
             <span class="author"><span class="avatar"></span></span>
             <span>2021-01-01 00:00:00</span>
           </div>
         </div>
-        <div class="inline-actions">
-          <a class="btn outline" style="width:auto" href="/pages/post-edit.html">수정</a>
-          <button class="btn outline danger" style="width:auto">삭제</button>
+        <div class="inline-actions" style="margin-top: 4px;">
+          <a class="btn outline" style="width:auto; padding: 10px 20px; font-size: 0.9rem;" href="/pages/post-edit.html">수정</a>
+          <button class="btn outline danger" style="width:auto; padding: 10px 20px; font-size: 0.9rem;">삭제</button>
         </div>
       </header>
 
-      <div class="image-box"></div>
+      <!-- 이미지 토글 영역 -->
+      <div id="image-section" style="display: none;">
+        <div class="image-toggle-header" onclick="toggleImage()" style="cursor: pointer; padding: 20px 0; border-top: 1px solid rgba(120, 120, 120, 0.12); border-bottom: 1px solid rgba(120, 120, 120, 0.12); margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(74, 99, 93, 0.03)'; this.style.paddingLeft='12px';" onmouseout="this.style.backgroundColor='transparent'; this.style.paddingLeft='0';">
+          <span style="font-size: 0.95rem; color: #4A635D; font-weight: 400; letter-spacing: 0.01em;">사진첩 펼쳐보기</span>
+          <span id="image-toggle-icon" style="font-size: 1.2rem; color: #4A635D; transition: transform 0.3s ease;">▼</span>
+        </div>
+        <div id="image-container" style="display: none; margin-bottom: 40px; overflow: hidden; animation: slideDown 0.4s ease;">
+          <div class="image-box" style="max-height: none;"></div>
+        </div>
+      </div>
+
+      <style>
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      </style>
+
       <div class="post-body">
-        
+
       </div>
 
       <div class="stats">
-        <div class="stat-pill"><strong></strong><span>좋아요수</span></div>
-        <div class="stat-pill"><strong></strong><span>조회수</span></div>
+        <div class="stat-pill"><strong></strong><span>좋아요</span></div>
+        <div class="stat-pill"><strong></strong><span>조회</span></div>
         <div class="stat-pill"><strong></strong><span>댓글</span></div>
       </div>
 
       <section class="comment-editor">
-        <textarea class="textarea" placeholder="댓글을 남겨주세요! (최대 255자)" maxlength="255"></textarea>
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span class="char-count" style="color:#999; font-size:13px;">0 / 255</span>
-          <button class="btn" style="max-width:140px;">댓글 등록</button>
+        <textarea class="textarea" placeholder="조용히 공감을 전하거나, 비슷한 마음을 나눠주세요" maxlength="255"></textarea>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 16px;">
+          <span class="char-count" style="color:#787878; font-size: 0.85rem; font-weight: 300;">0 / 255</span>
+          <button class="btn" style="max-width: 160px; padding: 12px 24px;">이야기 남기기</button>
         </div>
       </section>
     </article>
@@ -50,9 +73,9 @@
     </section>
 
     <!-- 댓글 더보기 버튼 & 스피너 -->
-    <div style="text-align:center; margin:20px 0;">
-      <button id="load-more-comments-btn" class="btn outline" style="max-width:200px; display:none;">댓글 더보기</button>
-      <div id="load-more-comments-spinner" style="display:none; margin-top:8px; color:#666;">로딩 중...</div>
+    <div style="text-align:center; margin: 48px 0;">
+      <button id="load-more-comments-btn" class="btn outline" style="max-width: 220px; display:none;">이야기 더 보기</button>
+      <div id="load-more-comments-spinner" style="display:none; margin-top: 16px; color: #787878; font-weight: 300;">불러오는 중...</div>
     </div>
   </main>
 

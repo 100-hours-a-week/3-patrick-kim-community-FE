@@ -22,10 +22,10 @@ import { showSuccess, showError, showWarning } from '/lib/toast.js';
 
         try {
             const result = await login(email, password);
-            showSuccess('로그인 성공! 게시판으로 이동합니다.');
-            // 로그인 성공 시 게시판으로 이동
+            showSuccess('로그인 성공! 서재로 이동합니다.');
+            // 로그인 성공 시 홈(서재)으로 이동
             setTimeout(() => {
-                window.location.href = '/pages/post-list.html';
+                window.location.href = '/pages/home.html';
             }, 500);
         } catch (error) {
             showError(`로그인 실패: ${error?.message || '다시 시도해주세요.'}`);

@@ -1,50 +1,55 @@
-/* Modal 스타일 */
+/* Modal 스타일 - LEAFIQ 디자인 시스템 */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(44, 44, 44, 0.75);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  animation: fadeIn 0.2s ease;
+  animation: fadeIn 0.3s ease;
 }
 
 .modal {
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
-  max-width: 500px;
+  background: #F9F8F4;
+  border-radius: 2px;
+  padding: 48px 40px;
+  max-width: 480px;
   width: 90%;
   max-height: 80vh;
   overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  animation: slideUp 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #eee;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .modal-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #333;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #2C2C2C;
+  letter-spacing: -0.02em;
+  line-height: 1.6;
+  flex: 1;
+  padding-right: 16px;
 }
 
 .modal-close {
   background: none;
   border: none;
-  font-size: 24px;
-  color: #999;
+  font-size: 1.8rem;
+  color: #B8B8B8;
   cursor: pointer;
   padding: 0;
   width: 32px;
@@ -53,82 +58,98 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .modal-close:hover {
-  background: #f5f5f5;
-  color: #333;
+  background: rgba(120, 120, 120, 0.08);
+  color: #787878;
 }
 
 .modal-body {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .modal-body textarea {
   width: 100%;
   min-height: 120px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  padding: 16px 0;
+  border: none;
+  border-bottom: 1.5px solid rgba(120, 120, 120, 0.25);
+  background: transparent;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: #2C2C2C;
   resize: vertical;
-  transition: border-color 0.2s;
+  transition: border-color 0.3s ease;
 }
 
 .modal-body textarea:focus {
   outline: none;
-  border-color: #007bff;
+  border-bottom-color: rgba(74, 99, 93, 0.5);
+}
+
+.modal-body textarea::placeholder {
+  color: #B8B8B8;
+  font-weight: 300;
 }
 
 .modal-body p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #555;
+  font-size: 1.05rem;
+  line-height: 2;
+  color: #787878;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .modal-footer {
   display: flex;
   gap: 12px;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .modal-btn {
-  padding: 10px 24px;
+  padding: 14px 32px;
   border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
+  border-radius: 2px;
+  font-size: 0.95rem;
+  font-weight: 400;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  letter-spacing: -0.01em;
 }
 
 .modal-btn-cancel {
-  background: #f5f5f5;
-  color: #666;
+  background: transparent;
+  color: #787878;
+  border: 1px solid rgba(120, 120, 120, 0.25);
 }
 
 .modal-btn-cancel:hover {
-  background: #e0e0e0;
+  background: rgba(120, 120, 120, 0.05);
+  border-color: rgba(120, 120, 120, 0.4);
 }
 
 .modal-btn-confirm {
-  background: #007bff;
-  color: #fff;
+  background: #4A635D;
+  color: #F9F8F4;
 }
 
 .modal-btn-confirm:hover {
-  background: #0056b3;
+  background: #3D5349;
 }
 
 .modal-btn-danger {
-  background: #dc3545;
-  color: #fff;
+  background: #C25B5B;
+  color: #F9F8F4;
 }
 
 .modal-btn-danger:hover {
-  background: #c82333;
+  background: #A84D4D;
 }
 
 @keyframes fadeIn {

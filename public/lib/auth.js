@@ -11,6 +11,6 @@ export function requireAuth() {
 
 export function redirectIfLoggedIn() {
   if (isLoggedIn()) {
-    window.location.href = '/pages/post-list.html';
+    window.location.href = '/pages/home.html';
   }
 }

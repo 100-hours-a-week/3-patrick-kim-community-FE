@@ -2,6 +2,9 @@ import { signup } from '/js-api/auth.js';
 import { uploadImage } from '/js-api/image.js';
 import { isValidEmail, isValidPassword, isValidNickname } from '/lib/validators.js';
 import { showSuccess, showError, showWarning } from '/lib/toast.js';
+import { redirectIfLoggedIn } from '/lib/auth.js';
+
+redirectIfLoggedIn(); // 이미 로그인된 경우 홈으로 리다이렉트
 
 // 프로필 이미지 선택 및 미리보기
 const profileImageInput = document.getElementById('profile-image');

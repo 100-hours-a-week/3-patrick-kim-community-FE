@@ -3,16 +3,297 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>개인정보처리방침 - 아무 말 대잔치</title>
+  <title>개인정보처리방침 - LEAFIQ</title>
   <link rel="stylesheet" href="/component/style.css">
+  <style>
+    .terms-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 40px;
+      background: #fff;
+      font-family: 'Noto Serif KR', serif;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .terms-container h1 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #4A635D;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .meta {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+
+    .intro {
+      background: #F7F9F8;
+      padding: 24px;
+      border-left: 4px solid #4A635D;
+      margin-bottom: 40px;
+      font-size: 15px;
+    }
+
+    .toc {
+      background: #FAFBFA;
+      padding: 24px 32px;
+      margin-bottom: 40px;
+      border-radius: 8px;
+    }
+
+    .toc ol {
+      list-style: decimal;
+      padding-left: 20px;
+    }
+
+    .toc li {
+      margin: 8px 0;
+    }
+
+    .toc a {
+      color: #4A635D;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .toc a:hover {
+      color: #2C3A36;
+      text-decoration: underline;
+    }
+
+    .section {
+      margin: 48px 0;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #E5E7E6;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #2C3A36;
+      margin-bottom: 20px;
+    }
+
+    .section ul {
+      list-style: disc;
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .section li {
+      margin: 10px 0;
+    }
+
+    .section table {
+      width: 100%;
+      margin: 20px 0;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+    }
+
+    .section th,
+    .section td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .section th {
+      background: #F7F9F8;
+      font-weight: 600;
+      color: #4A635D;
+    }
+
+    address {
+      font-style: normal;
+      background: #F7F9F8;
+      padding: 16px;
+      border-radius: 4px;
+      line-height: 1.8;
+    }
+
+    address a {
+      color: #4A635D;
+      text-decoration: none;
+    }
+
+    address a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
   <div id="header"></div>
-  <main class="container">
-    <h2 class="center">개인정보처리방침</h2>
-    <iframe id="privacy-frame" src="http://localhost:8080/privacy" style="width:100%;min-height:70vh;border:1px solid #eee;"></iframe>
+
+  <main class="terms-container">
+    <h1>개인정보처리방침</h1>
+    <p class="meta">최종 업데이트: 2025.12.07</p>
+
+    <div class="intro">
+      <strong>LEAFIQ</strong>(이하 "회사")는 「개인정보 보호법」 등 관계 법령을 준수하며,
+      <strong>LEAFIQ</strong> 커뮤니티 이용과 관련하여 이용자의 개인정보를 안전하게 처리합니다.
+    </div>
+
+    <nav class="toc" aria-label="목차">
+      <ol>
+        <li><a href="#p1">1. 수집하는 개인정보의 항목</a></li>
+        <li><a href="#p2">2. 개인정보의 수집 방법</a></li>
+        <li><a href="#p3">3. 개인정보의 이용 목적</a></li>
+        <li><a href="#p4">4. 보유 및 이용기간, 파기절차</a></li>
+        <li><a href="#p5">5. 제3자 제공</a></li>
+        <li><a href="#p6">6. 처리위탁</a></li>
+        <li><a href="#p7">7. 국외 이전</a></li>
+        <li><a href="#p8">8. 이용자의 권리 및 행사방법</a></li>
+        <li><a href="#p9">9. 쿠키의 사용</a></li>
+        <li><a href="#p10">10. 안전성 확보조치</a></li>
+        <li><a href="#p11">11. 개인정보 보호책임자</a></li>
+        <li><a href="#p12">12. 본 방침의 변경</a></li>
+      </ol>
+    </nav>
+
+    <div id="p1" class="section">
+      <h2>1. 수집하는 개인정보의 항목</h2>
+      <ul>
+        <li><strong>필수:</strong> 이메일, 닉네임, 비밀번호(해시), 서비스 이용기록, 접속로그, 쿠키, IP</li>
+        <li><strong>선택:</strong> 프로필 이미지, 자기소개</li>
+        <li><strong>고객센터 처리 시:</strong> 문의 내용, 첨부파일, 연락처</li>
+      </ul>
+    </div>
+
+    <div id="p2" class="section">
+      <h2>2. 개인정보의 수집 방법</h2>
+      <ul>
+        <li>회원가입 및 프로필 입력 등 서비스 내 직접 입력</li>
+        <li>자동 수집 (쿠키, 접속기기 정보, 브라우저 정보 등)</li>
+        <li>고객센터 문의, 이벤트 참여</li>
+      </ul>
+    </div>
+
+    <div id="p3" class="section">
+      <h2>3. 개인정보의 이용 목적</h2>
+      <ul>
+        <li>회원 식별, 계정 관리, 부정이용 방지</li>
+        <li>커뮤니티 운영 (게시물, 댓글, 알림), 맞춤형 기능 제공</li>
+        <li>서비스 개선, 통계 분석, 오류 및 보안 모니터링</li>
+        <li>공지사항 전달 및 고객지원</li>
+        <li>법령 준수 및 분쟁 대응</li>
+      </ul>
+    </div>
+
+    <div id="p4" class="section">
+      <h2>4. 보유 및 이용기간, 파기절차</h2>
+      <ul>
+        <li>원칙적으로 수집 및 이용 목적 달성 시 지체 없이 파기합니다.</li>
+        <li>관계 법령에 따른 보관 (예: 전자상거래법, 통신비밀보호법 등)은 해당 기간 동안 보유합니다.</li>
+        <li><strong>파기방법:</strong> 전자적 파일은 복구불가능한 기술적 방법으로, 출력물은 분쇄 또는 소각</li>
+      </ul>
+    </div>
+
+    <div id="p5" class="section">
+      <h2>5. 제3자 제공</h2>
+      <p>회사는 법령에 근거하거나 이용자의 별도 동의가 있는 경우에 한해 최소한의 범위에서 제공합니다.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>제공받는 자</th>
+            <th>제공 목적</th>
+            <th>항목</th>
+            <th>보유·이용기간</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4" style="text-align: center; color: #888;">현재 제3자 제공 없음</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="p6" class="section">
+      <h2>6. 처리위탁</h2>
+      <p>원활한 서비스 제공을 위해 업무 일부를 위탁할 수 있으며, 위탁 시 계약 등을 통해 개인정보 보호조치를 이행합니다.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>수탁자</th>
+            <th>위탁 업무</th>
+            <th>보유·이용기간</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>클라우드 서비스 제공사</td>
+            <td>인프라 운영 및 데이터 저장</td>
+            <td>위탁계약 종료 시까지</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="p7" class="section">
+      <h2>7. 국외 이전</h2>
+      <p>현재 개인정보의 국외 이전은 없습니다. 향후 국외 이전이 발생하는 경우 목적, 항목, 보유기간, 관리책임자 연락처 등을 고지하겠습니다.</p>
+    </div>
+
+    <div id="p8" class="section">
+      <h2>8. 이용자의 권리 및 행사방법</h2>
+      <ul>
+        <li>개인정보 열람, 정정, 삭제, 처리정지 요구권이 있으며, 고객센터 또는 이메일로 요청할 수 있습니다.</li>
+        <li>대리인을 통한 권리 행사는 위임장 등 관련 서류로 확인 후 진행합니다.</li>
+        <li>회원정보 수정은 서비스 내 프로필 페이지에서 직접 수정 가능합니다.</li>
+      </ul>
+    </div>
+
+    <div id="p9" class="section">
+      <h2>9. 쿠키의 사용</h2>
+      <ul>
+        <li>개인화, 로그인 유지, 이용 통계 분석을 위해 쿠키를 사용합니다.</li>
+        <li>브라우저 설정에서 쿠키 저장을 거부할 수 있으나, 일부 기능에 제약이 있을 수 있습니다.</li>
+        <li>사용하는 쿠키: 인증 토큰 (accessToken), 세션 관리</li>
+      </ul>
+    </div>
+
+    <div id="p10" class="section">
+      <h2>10. 안전성 확보조치</h2>
+      <ul>
+        <li><strong>관리적 조치:</strong> 내부관리계획 수립, 접근권한 최소화, 정기적 직원 교육</li>
+        <li><strong>기술적 조치:</strong> 비밀번호 해시 처리, 전송구간 암호화 (HTTPS), 접근통제, 로그 모니터링</li>
+        <li><strong>물리적 조치:</strong> 전산실 및 자료보관실 접근통제</li>
+      </ul>
+    </div>
+
+    <div id="p11" class="section">
+      <h2>11. 개인정보 보호책임자</h2>
+      <address>
+        <strong>보호책임자:</strong> LEAFIQ 운영팀<br/>
+        <strong>이메일:</strong> <a href="mailto:privacy@leafiq.com">privacy@leafiq.com</a><br/>
+        <strong>주소:</strong> 서울특별시<br/>
+      </address>
+      <p style="margin-top: 16px; color: #666;">
+        개인정보 침해에 대한 신고나 상담이 필요한 경우 아래 기관에 문의하실 수 있습니다.<br/>
+        - 개인정보침해신고센터: (국번없이) 118<br/>
+        - 개인정보분쟁조정위원회: 1833-6972
+      </p>
+    </div>
+
+    <div id="p12" class="section">
+      <h2>12. 본 방침의 변경</h2>
+      <p>본 방침은 2025년 12월 7일부터 적용됩니다.</p>
+      <p>방침 내용의 추가, 삭제 및 수정이 있을 경우 시행일 최소 7일 전부터 공지사항을 통해 알려드립니다.</p>
+    </div>
   </main>
+
   <div id="footer"></div>
+
   <script type="module">
     import { loadHeader, loadFooter } from '/component/layout.js';
     loadHeader();

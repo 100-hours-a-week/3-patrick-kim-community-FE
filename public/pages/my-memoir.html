@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leafiq - 특별한 순간들</title>
+  <link rel="stylesheet" href="/component/style.css" />
+  <style>
+    /* 산문집 특화 스타일 */
+    .memoir-page {
+      background: linear-gradient(to bottom, #F9F8F4 0%, #FAF9F6 100%);
+    }
+
+    .memoir-container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 40px 100px 40px;
+      position: relative;
+    }
+
+    /* 책 표지 영역 */
+    .memoir-cover {
+      text-align: center;
+      margin-bottom: 80px;
+      padding: 60px 32px;
+      background: linear-gradient(135deg, rgba(74, 99, 93, 0.03) 0%, rgba(74, 99, 93, 0.08) 100%);
+      border-left: 3px solid #4A635D;
+      border-right: 3px solid #4A635D;
+      position: relative;
+    }
+
+    .memoir-cover::before,
+    .memoir-cover::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: rgba(74, 99, 93, 0.3);
+    }
+
+    .memoir-cover::before {
+      top: 24px;
+    }
+
+    .memoir-cover::after {
+      bottom: 24px;
+    }
+
+    .memoir-title {
+      font-size: 2.2rem;
+      font-weight: 500;
+      color: #2C2C2C;
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .memoir-subtitle {
+      font-size: 1rem;
+      color: #787878;
+      font-weight: 300;
+      line-height: 1.9;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    .memoir-date {
+      font-size: 0.85rem;
+      color: #B8B8B8;
+      font-weight: 300;
+      margin-top: 24px;
+      letter-spacing: 0.1em;
+    }
+
+    /* 페이지 구분선 */
+    .page-divider {
+      text-align: center;
+      margin: 64px 0;
+      position: relative;
+    }
+
+    .page-divider::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(120, 120, 120, 0.2), transparent);
+    }
+
+    .page-divider-text {
+      position: relative;
+      display: inline-block;
+      padding: 0 20px;
+      background: #F9F8F4;
+      color: #B8B8B8;
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+    }
+
+    /* 산문 카드 */
+    .memoir-list {
+      display: flex;
+      flex-direction: column;
+      gap: 72px;
+    }
+
+    .memoir-card {
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(120, 120, 120, 0.12);
+      padding: 48px 40px;
+      position: relative;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(44, 44, 44, 0.04);
+    }
+
+    .memoir-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 0;
+      background: linear-gradient(to bottom, #4A635D, rgba(74, 99, 93, 0.3));
+      transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .memoir-card:hover {
+      transform: translateX(8px);
+      box-shadow: 0 8px 24px rgba(44, 44, 44, 0.12);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .memoir-card:hover::before {
+      height: 100%;
+    }
+
+    .memoir-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(120, 120, 120, 0.1);
+    }
+
+    .memoir-card-date {
+      font-size: 0.95rem;
+      color: #4A635D;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+
+    .memoir-card-season {
+      font-size: 0.85rem;
+      color: #B8B8B8;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .memoir-card-title {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #2C2C2C;
+      margin-bottom: 16px;
+      line-height: 1.6;
+      letter-spacing: -0.01em;
+    }
+
+    .memoir-card-content {
+      font-size: 1.05rem;
+      color: #787878;
+      line-height: 1.9;
+      font-weight: 300;
+      margin-bottom: 24px;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .memoir-card-footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.85rem;
+      color: #B8B8B8;
+      font-weight: 300;
+    }
+
+    .memoir-card-tag {
+      padding: 4px 12px;
+      background: rgba(74, 99, 93, 0.08);
+      border-radius: 12px;
+      color: #4A635D;
+      font-size: 0.8rem;
+    }
+
+    /* 빈 상태 */
+    .memoir-empty {
+      text-align: center;
+      padding: 120px 40px;
+      color: #B8B8B8;
+    }
+
+    .memoir-empty-icon {
+      font-size: 4rem;
+      margin-bottom: 32px;
+      opacity: 0.3;
+    }
+
+    .memoir-empty-title {
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: #787878;
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+
+    .memoir-empty-text {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 2;
+      color: #B8B8B8;
+    }
+
+    /* 로딩 애니메이션 */
+    .memoir-loading {
+      text-align: center;
+      padding: 60px 0;
+      color: #B8B8B8;
+      font-size: 0.95rem;
+      font-weight: 300;
+    }
+
+    .memoir-loading::after {
+      content: '...';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0%, 20% { content: '.'; }
+      40% { content: '..'; }
+      60%, 100% { content: '...'; }
+    }
+
+    /* 페이지 넘버 */
+    .page-number {
+      text-align: center;
+      margin-top: 80px;
+      font-size: 0.9rem;
+      color: #B8B8B8;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+    }
+
+    /* 반응형 */
+    @media (max-width: 768px) {
+      .memoir-container {
+        padding: 60px 24px 80px 24px;
+      }
+
+      .memoir-cover {
+        padding: 40px 20px;
+        margin-bottom: 60px;
+      }
+
+      .memoir-title {
+        font-size: 1.8rem;
+      }
+
+      .memoir-card {
+        padding: 32px 24px;
+      }
+
+      .memoir-card-title {
+        font-size: 1.3rem;
+      }
+
+      .memoir-list {
+        gap: 48px;
+      }
+    }
+  </style>
+</head>
+<body class="sanmoon-bg memoir-page">
+  <div id="header"></div>
+
+  <main class="memoir-container">
+    <!-- 책 표지 -->
+    <div class="memoir-cover">
+      <h1 class="memoir-title">나만의 특별한 순간</h1>
+      <p class="memoir-subtitle">
+        시간이 지나도 빛바래지 않을<br/>
+        소중한 기억들의 기록
+      </p>
+      <p class="memoir-date" id="current-date">2025</p>
+    </div>
+
+    <!-- 산문 목록 -->
+    <section class="memoir-list" id="memoir-list">
+      <!-- 산문이 동적으로 추가됩니다 -->
+    </section>
+
+    <!-- 빈 상태 -->
+    <div class="memoir-empty" id="memoir-empty" style="display: none;">
+      <div class="memoir-empty-icon">📖</div>
+      <h2 class="memoir-empty-title">
+        첫 페이지는 언제나 비어있습니다
+      </h2>
+      <p class="memoir-empty-text">
+        하지만 그 빈 페이지는<br/>
+        무한한 가능성을 품고 있지요<br/><br/>
+        오늘의 순간을 기록해보시겠어요?
+      </p>
+    </div>
+
+    <!-- 로딩 -->
+    <div class="memoir-loading" id="memoir-loading" style="display: none;">
+      페이지를 펼치는 중
+    </div>
+
+    <!-- 페이지 구분선 -->
+    <div class="page-divider" id="page-divider" style="display: none;">
+      <span class="page-divider-text">✦</span>
+    </div>
+
+    <!-- 페이지 번호 -->
+    <div class="page-number" id="page-number" style="display: none;">
+      — Page <span id="current-page">1</span> —
+    </div>
+  </main>
+
+  <div id="footer"></div>
+
+  <script type="module" src="/pages/my-memoir.js"></script>
+</body>
+</html>
